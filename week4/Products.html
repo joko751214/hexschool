@@ -41,7 +41,7 @@
                     <td>{{ product.origin_price }}</td>
                     <td>{{ product.price }}</tdn_price>
                     <td>
-                      <span v-if='product.is_enabled' class="text-success">啟用</span>
+                      <span v-if='product.enabled' class="text-success">啟用</span>
                       <span v-else>未啟用</span>
                     </td>
                     <td>
@@ -53,7 +53,24 @@
                 </tr>
             </tbody>
         </table>
-      
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
       <!-- Product Modal -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -72,7 +89,14 @@
                   <div class="form-group">
                     <label for="imageUrl">輸入圖片網址</label>
                     <input id="imageUrl" v-model="tempProduct.imageUrl" class="form-control" type="text" placeholder="請輸入圖片網址">
-                    <img class="img-fluid" :src="tempProduct.imageUrl" alt="">
+                    <img class="img-fluid mt-3" :src="tempProduct.imageUrl" alt="">
+                  </div>
+                  <div class="form-group" v-if='!tempProduct.imageUrl'>
+                    <label for="customFile">
+                      或 上傳圖片
+                    </label>
+                    <input id="customFile" ref="file" type="file" class="form-control">
+                    <img class="img-fluid mt-3" :src="tempProduct.imageUrl" alt="">
                   </div>
                 </div>
                 <div class="col-sm-8">
@@ -110,23 +134,22 @@
                     <textarea id='content' v-model="tempProduct.content" class="form-control" placeholder="請輸入說明內容"></textarea>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="is_enabled">
-                    <label  class="form-check-label" for="is_enabled">是否啟用</label>
+                    <input class="form-check-input" v-model="tempProduct.enabled" type="checkbox" id="enabled">
+                    <label  class="form-check-label" for="enabled">是否啟用</label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-              <button type="button" class="btn btn-danger" @click="updateProduct">確認</button>
+              <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Delete Modal -->
-      <del-product-modal></del-product-modal>
-      <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header bg-danger text-white">
@@ -147,104 +170,11 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
 
-    <script>
-      new Vue({
-        el: '#app',
-        data: {
-          products: [
-            {
-              id: 1586934917210,
-              unit: '盒',
-              category: '麥片',
-              title: '格蘭諾拉麥片',
-              origin_price: 620,
-              price: 434,
-              description: '用我們新配方的格蘭諾拉麥片來開啟美好的一天 - 這是一種營養的麥片，提供優質的蛋白質來源，每份只有 182 卡路里。',
-              content: '每份含有超過 8.4 克蛋白質的蛋格蘭諾拉麥片是增加每日蛋白質攝取量的人的理想早餐選擇。 ',
-              is_enabled: 1,
-              imageUrl: 'https://s1.thcdn.com/productimg/1600/1600/11654282-3164686690835269.jpg',
-              options: {
-                id: 1,
-                stars: 4,
-                lastInventory: 70
-              }
-            },
-            {
-              id: 1196934917910,
-              unit: '盒',
-              category: '高蛋白棒',
-              title: '高蛋白營養棒',
-              origin_price: 1370,
-              price: 960,
-              description: '高蛋白營養棒含有 30 克蛋白質，有助於肌肉的生長和維持，可增強肌肉質量。',
-              content: '作為一款美味的零食，它是增加日常蛋白質和碳水化合物攝入量的理想選擇，適合健身訓練時或全天任何時間享用。',
-              is_enabled: 0,
-              imageUrl: 'https://s1.thcdn.com/productimg/960/960/11281409-4114620652895496.jpg',
-              options: {
-                id: 1,
-                stars: 3,
-                lastInventory: 40
-              }
-            }
-          ],
-          tempProduct: {}
-        },
-        methods: {
-          openModal(status, item) {
-            switch(status) {
-              case 'new':
-              this.tempProduct = {};
-                $("#productModal").modal("show");
-                break;
+    <script src="./js/all.js"></script>
 
-              case 'edit':
-                this.tempProduct = Object.assign({}, item);
-                $("#productModal").modal("show");
-                break;
-
-              case 'delete':
-                this.tempProduct = Object.assign({}, item);
-                $('#deleteModal').modal('show');
-                break;
-              default:
-                break;
-            }
-          },
-          updateProduct() {
-            if(this.tempProduct.id) {
-              const id = this.tempProduct.id
-              this.products.forEach((item, index) => {
-                if(item.id === id) {
-                  this.products[index] = this.tempProduct;
-                }
-              });
-            }else {
-              const id = new Date().getTime();
-              this.tempProduct.id = id;
-              this.products.push(this.tempProduct);
-            }
-            this.tempProduct = {};
-            $("#productModal").modal("hide");
-          },
-          // deleteProduct() {
-          //   if(this.tempProduct.id) {
-          //     const id = this.tempProduct.id
-          //     this.products.forEach((item, index) => {
-          //       if(item.id === id) {
-          //         this.products.splice(index, 1);
-          //       }
-          //     });
-          //     this.tempProduct = {};
-          //     $('#deleteModal').modal('hide');
-          //   }
-          // }
-        }
-      })
-    </script>
-
-    <script src='./js/delProductModal.js'></script>
+    
 </body>
 </html>
