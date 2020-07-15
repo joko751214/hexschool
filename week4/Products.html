@@ -53,23 +53,8 @@
                 </tr>
             </tbody>
         </table>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <pagination :pages="pagination" @emit-pages="getProducts"></pagination>
+        
 
       <!-- Product Modal -->
       <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
@@ -88,26 +73,25 @@
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="imageUrl">輸入圖片網址</label>
-                    <input id="imageUrl" v-model="tempProduct.imageUrl" class="form-control" type="text" placeholder="請輸入圖片網址">
-                    <img class="img-fluid mt-3" :src="tempProduct.imageUrl" alt="">
+                    <input id="imageUrl" v-model="tempProduct.imageUrl[0]" class="form-control" type="text" placeholder="請輸入圖片網址" >
                   </div>
-                  <div class="form-group" v-if='!tempProduct.imageUrl'>
+                  <div class="form-group">
                     <label for="customFile">
                       或 上傳圖片
                     </label>
                     <input id="customFile" ref="file" type="file" class="form-control">
-                    <img class="img-fluid mt-3" :src="tempProduct.imageUrl" alt="">
+                    <img class="img-fluid mt-3" :src="tempProduct.imageUrl[0]" alt="">
                   </div>
                 </div>
                 <div class="col-sm-8">
                   <div class="form-group">
                     <label for="title">標題</label>
-                    <input id="title" v-model="tempProduct.title" class="form-control" type="text" placeholder="請輸入標題">
+                    <input id="title" v-model="tempProduct.title" class="form-control" type="text" placeholder="請輸入標題" required>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="category">分類</label>
-                      <input type="text" v-model="tempProduct.category" class="form-control" id="category" placeholder="請輸入分類">
+                      <input type="text" v-model="tempProduct.category" class="form-control" id="category" placeholder="請輸入分類" required>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="unit">單位</label>
@@ -127,11 +111,11 @@
                   <hr>
                   <div class="form-group">
                     <label for="description">產品描述</label>
-                    <textarea id='description' v-model="tempProduct.description" class="form-control" placeholder="請輸入產品描述"></textarea>
+                    <textarea id='description' v-model="tempProduct.description" class="form-control" placeholder="請輸入產品描述" required></textarea>
                   </div>
                   <div class="form-group">
                     <label for="content">說明內容</label>
-                    <textarea id='content' v-model="tempProduct.content" class="form-control" placeholder="請輸入說明內容"></textarea>
+                    <textarea id='content' v-model="tempProduct.content" class="form-control" placeholder="請輸入說明內容" required></textarea>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" v-model="tempProduct.enabled" type="checkbox" id="enabled">
@@ -173,6 +157,9 @@
       </div>
     </div>
 
+    <!-- 分頁元件建立 -->
+    <script src="./js/pagination.js"></script>
+    <!-- 主元件 -->
     <script src="./js/all.js"></script>
 
     

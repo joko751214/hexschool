@@ -2,7 +2,9 @@ new Vue({
   el: '#app',
   data: {
     products: [],
-    tempProduct: {},
+    tempProduct: {
+      imageUrl: []
+    },
     user: {
       token: '',
       uuid: 'e9fd54ce-9d42-40cb-ba4e-14553d1d6375'
@@ -21,7 +23,7 @@ new Vue({
   },
   methods: {
     getProducts(page = 1) {
-      const apiUrl = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/ec/products?page=${page}`
+      const apiUrl = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products?page=${page}`
 
       axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
 
@@ -29,18 +31,21 @@ new Vue({
         .then(res => {
           this.products = res.data.data  // 取得產品列表
           this.pagination = res.data.meta.pagination  // 取得分頁資訊
+          console.log(res)
         })
     },
     openModal(status, item) {
       switch(status) {
         case 'new':
-        this.tempProduct = {};
+          this.tempProduct = {
+            imageUrl: []
+          };
           $("#productModal").modal("show");
           break;
 
         case 'edit':
           this.tempProduct = Object.assign({}, item);
-          $("#productModal").modal("show");
+          this.getProduct(item.id)
           break;
 
         case 'delete':
@@ -52,42 +57,43 @@ new Vue({
       }
     },
     updateProduct() {
-      api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
+      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
+      let httpMethod = 'post'
+      
       axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
 
-      axios.patch(api, this.tempProduct)
-        .then(() => {
-          $("#productModal").modal("hide");
-          console.log(this.tempProduct)
+      if(this.tempProduct.id) {
+        api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`
+        httpMethod = 'patch'
+      }
+
+      axios[httpMethod](api, this.tempProduct)
+        .then( () => {
           this.getProducts();
+          $("#productModal").modal("hide");
         }).catch(error => {
           console.log(error);
+        })      
+    },
+    getProduct(id) {
+      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
+
+      axios.get(api)
+        .then(res => {
+          this.tempProduct = res.data.data
+          $("#productModal").modal("show");
         })
-      // if(this.tempProduct.id) {
-      //   const id = this.tempProduct.id
-      //   this.products.forEach((item, index) => {
-      //     if(item.id === id) {
-      //       this.products[index] = this.tempProduct;
-      //     }
-      //   });
-      // }else {
-      //   const id = new Date().getTime();
-      //   this.tempProduct.id = id;
-      //   this.products.push(this.tempProduct);
-      // }
-      
     },
     deleteProduct() {
-      if(this.tempProduct.id) {
-        const id = this.tempProduct.id
-        this.products.forEach((item, index) => {
-          if(item.id === id) {
-            this.products.splice(index, 1);
-          }
-        });
-        this.tempProduct = {};
-        $('#deleteModal').modal('hide');
-      }
+      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
+
+      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
+
+      axios.delete(api)
+        .then( () => {
+          this.getProducts();
+          $("#deleteModal").modal("hide");
+        })
     },
     uploadFile() {
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <script>
+        var uuid = 'e9fd54ce-9d42-40cb-ba4e-14553d1d6375';
+        const apiUrl = `https://course-ec-api.hexschool.io/api/${uuid}/admin/ec/products?page=1`
+
+        token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+
+        axios.get(apiUrl)
+        .then(res => {;
+            // let api = `https://course-ec-api.hexschool.io/api/${uuid}/admin/ec/product`;
+            res.data.data.forEach( item => {
+                let api = `https://course-ec-api.hexschool.io/api/${uuid}/admin/ec/product/${item.id}`
+                axios.get(api)
+                    .then( res => {
+                        let url = `https://course-ec-api.hexschool.io/api/${uuid}/admin/ec/product`;
+                        axios.post(url, res.data.data)
+                            .then( () => {
+                                console.log('finish')
+                            })
+                    })
+            }
+            )
+        })
+    </script>
+</body>
+</html>
