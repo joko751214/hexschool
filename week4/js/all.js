@@ -18,20 +18,20 @@ new Vue({
     if(this.user.token === '') {
       window.location = 'Login.html';
     }
-    // 取得全部的產品
+
     this.getProducts();
   },
   methods: {
+    // 取得所有產品
     getProducts(page = 1) {
       const apiUrl = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products?page=${page}`
 
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
+      axios.defaults.headers['Authorization'] = `Bearer ${this.user.token}`;
 
       axios.get(apiUrl)
         .then(res => {
           this.products = res.data.data  // 取得產品列表
           this.pagination = res.data.meta.pagination  // 取得分頁資訊
-          console.log(res)
         })
     },
     openModal(status, item) {
@@ -45,7 +45,7 @@ new Vue({
 
         case 'edit':
           this.tempProduct = Object.assign({}, item);
-          this.getProduct(item.id)
+          this.$refs.productModal.getProduct(this.tempProduct.id)
           break;
 
         case 'delete':
@@ -56,45 +56,7 @@ new Vue({
           break;
       }
     },
-    updateProduct() {
-      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
-      let httpMethod = 'post'
-      
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-      if(this.tempProduct.id) {
-        api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`
-        httpMethod = 'patch'
-      }
-
-      axios[httpMethod](api, this.tempProduct)
-        .then( () => {
-          this.getProducts();
-          $("#productModal").modal("hide");
-        }).catch(error => {
-          console.log(error);
-        })      
-    },
-    getProduct(id) {
-      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${id}`;
-
-      axios.get(api)
-        .then(res => {
-          this.tempProduct = res.data.data
-          $("#productModal").modal("show");
-        })
-    },
-    deleteProduct() {
-      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
-
-      axios.delete(api)
-        .then( () => {
-          this.getProducts();
-          $("#deleteModal").modal("hide");
-        })
-    },
+    
     uploadFile() {
 
     }
