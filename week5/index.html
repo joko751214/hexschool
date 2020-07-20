@@ -2,19 +2,23 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Week5 表單驗證</title>
-  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+  <title>Week5 表單驗證</title>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <div id="app">
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <!-- .navbar-brand 左上LOGO位置--><a class="navbar-brand logo" href="#">首頁</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- .navbar-brand 左上LOGO位置-->
+      <a class="navbar-brand logo" href="#">首頁</a>
       <!-- .navbar-toggler 漢堡式選單按鈕-->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <!-- .navbar-toggler-icon 漢堡式選單Icon--><span class="navbar-toggler-icon"></span>
+        <!-- .navbar-toggler-icon 漢堡式選單Icon-->
+        <span class="navbar-toggler-icon"></span>
       </button>
       <!-- .collapse.navbar-collapse 用於外層中斷點群組和隱藏導覽列內容-->
       <!-- 選單項目&漢堡式折疊選單 -->
@@ -30,24 +34,47 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else</a></div>
           </li>
         </ul>
+        <ul>
+          <li class="navbar-nav dropdown">
+            <button class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-shopping-cart text-light"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          
+        </ul>
       </div>
     </nav>
     <div class="row product">
-      <div class="col-sm col-md-4 col-sm-4" v-for="product in products"><img :src="product.imageUrl[0]" alt=""/>
+      <div class="col-sm col-md-4 col-sm-4" v-for="product in products">
+        <img class="imgSize" :src="product.imageUrl[0]" alt=""/>
         <div class="title">{{product.title}}</div>
         <div class="price">{{product.price}}</div>
-        <button class="btn btn-outline-primary mt-2 float-left">查看內容</button>
-        <button class="btn btn-outline-danger mt-2 float-right">加入購物車</button>
+        <button class="btn btn-outline-primary mt-2 float-left" @click="openModal(product)">查看內容</button>
+        <button class="btn btn-outline-danger mt-2 float-right" @click="confirm">加入購物車</button>
       </div>
     </div>
   </div>
+
+  <!-- tempProductModal -->
+  <temp-product-modal :uuid="uuid" ref="temp"></temp-product-modal>
 </div>
 <!-- partial -->
-  <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
+<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script><script  src="./script.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+
+<!-- TempProductModal元件 -->
+<script src='./js/tempProductModal.js'></script>
+<!-- 主元件 -->
+<script  src="./js/all.js"></script>
 
 </body>
 </html>

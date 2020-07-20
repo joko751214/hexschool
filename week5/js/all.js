@@ -3,7 +3,10 @@ new Vue({
 	data: {
 		uuid: 'e9fd54ce-9d42-40cb-ba4e-14553d1d6375',
 		apiPath: 'https://course-ec-api.hexschool.io/api',
-		products: [],
+    products: [],
+    tempProduct: {
+      image: []
+    }
 	},
 	methods: {
 		getProducts(page = 1) {
@@ -11,12 +14,15 @@ new Vue({
 			axios.get(url)
 				.then(res => {
 					this.products = res.data.data;
-					console.log(this.products)
 			}).catch(err => {
 				console.log(err);
 			})
-		}
-	},
+    },
+    openModal(item) {
+      this.tempProduct = Object.assign({}, item)
+      this.$refs.temp.getProduct(this.tempProduct.id);
+    }
+  },
 	created() {
 		this.getProducts();
 	},
