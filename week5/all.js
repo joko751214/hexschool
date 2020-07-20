@@ -5,22 +5,40 @@ new Vue({
 		apiPath: 'https://course-ec-api.hexschool.io/api',
     products: [],
     tempProduct: {
-      image: []
-    }
+			imageUrl: [],
+			num: 0,
+		},
+		cart: []
 	},
 	methods: {
 		getProducts(page = 1) {
 			const url = `${this.apiPath}/${this.uuid}/ec/products?page=${page}`;
 			axios.get(url)
-				.then(res => {
-					this.products = res.data.data;
-			}).catch(err => {
-				console.log(err);
-			})
-    },
-    openModal(item) {
+					.then(res => {
+						this.products = res.data.data;
+				}).catch(err => {
+					console.log(err);
+				})
+			},
+		openModal(item) {
       this.tempProduct = Object.assign({}, item)
-      this.$refs.temp.getProduct(this.tempProduct.id);
+      console.log(this.tempProduct);
+			this.getProduct(this.tempProduct.id);
+		},
+		getProduct(id) {
+      let api = `https://course-ec-api.hexschool.io/api/${this.uuid}/ec/product/${id}`;
+
+      axios.get(api)
+        .then(res => {
+          this.tempProduct = res.data.data;
+          $("#tempProductModal").modal("show");
+        })
+    },
+    confirm(item, num=1) {
+      item.num = num;
+      this.cart.push(item);
+      $("#tempProductModal").modal("hide");
+      console.log(this.cart)
     }
   },
 	created() {
