@@ -13,7 +13,3 @@
 .price {
   color: red;
 }
-
-.price:before {
-  content: "NT $";
-}
