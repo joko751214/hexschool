@@ -119,10 +119,10 @@ new Vue({
       $("#tempProductModal").modal("hide");
     },
     amount() {
-      console.log($(".btn.btn-sm.btn-cart"));
+      console.log(this.carts)
       this.totalPrice = 0;
       this.carts.forEach( item => {
-        this.totalPrice += item.price*item.num;
+        this.totalPrice += item.product.price*item.quantity;
       });
     },
     updateCartData(item, status) {
@@ -203,17 +203,19 @@ new Vue({
             );
           })
       }
-      // 這邊要添加一個可以不讓表單摺疊回去的方法
+      // 這邊要添加一個可以不讓表單摺疊回去的方法，研究中(或是未來可以考慮新增一個頁面來做跳轉解決這個問題)
     },
+    confirm() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+        $("#formModal").modal("hide");
+      },2000);
+      
+    }
   },
 	created() {
     this.getProducts();
     this.getCartData();
   },
-  mounted() {
-    
-    $(".btn.btn-sm.btn-cart")[0].ariaExpanded = 'true';
-    console.log($(".btn.btn-sm.btn-cart"))
-    // $(".dropdown-menu.dropdown-menu-right")[0].draggable = true;
-  }
 })
