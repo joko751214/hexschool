@@ -76,7 +76,7 @@
                           </div>
                           <input type="text" class="form-control text-center" :value="cart.quantity">
                           <div class="input-group-append">
-                            <button class="btn btn-outline-primary" @click="updateCartData(cart, '-')">-</button>
+                            <button class="btn btn-outline-primary" @click="updateCartData(cart, '-')" :disabled="cart.quantity === 1">-</button>
                           </div>
                         </div>
                       </td>
