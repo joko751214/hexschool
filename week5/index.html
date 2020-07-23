@@ -41,7 +41,7 @@
               <i class="fa fa-shopping-cart text-light fa-2x" aria-hidden="true"></i>
               <span class="badge badge-pill badge-danger">{{carts.length}}</span>
             </button>
-            <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 600px;" data-offset="40">
+            <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 600px;" data-offset="40" @click="stopPropagation()">
               <div class="col-md-12">
                 <div class="mb-2">
                   <h4>已選擇商品</h4>
@@ -81,7 +81,7 @@
                         </div>
                       </td>
                       <td class="align-middle">{{cart.product.unit}}</td>
-                      <td class="align-middle">{{cart.product.price * cart.quantity | money}}</td>
+                      <td class="align-middle text-right">{{cart.product.price * cart.quantity | money}}</td>
                     </tr>
                   </tbody>
                   <tfoot>
@@ -169,7 +169,7 @@
         <div class="modal-body">
           <validation-observer v-slot="{ invalid }">
             <form @submit.prevent="confirm">
-              <div class="form-grouop">
+              <div class="form-group">
                 <validation-provider rules="required" v-slot="{ errors, classes, passed }" class="form-group">
                   <label for="username">收件人姓名</label>
                   <input type="text" name="姓名" class="form-control" id="username" v-model="form.name" :class="classes">

@@ -212,6 +212,9 @@ new Vue({
         $("#formModal").modal("hide");
       },2000);
       
+    },
+    stopPropagation(e) {
+      console.log(e)
     }
   },
 	created() {
