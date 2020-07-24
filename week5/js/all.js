@@ -71,6 +71,8 @@ new Vue({
           break;
         case 'confirm':
           $("#formModal").modal('show');
+          // 點選結帳按鈕後，將購物車清單再次關閉
+          $(".btn.btn-sm.btn-cart").next().toggle();
       }  
 		},
 		getProduct(id) {
@@ -124,6 +126,11 @@ new Vue({
       this.carts.forEach( item => {
         this.totalPrice += item.product.price*item.quantity;
       });
+      // 參考連結:https://codepen.io/seltix/pen/LygQXx
+      // 原先有使用stopPropagation，後來發現沒有效果
+      // 然後透過使用.next().toggle()就可以達到顯示跟隱藏的效果
+      // 上網查詢之後，發現是jQuery的toggle()方法
+      $(".btn.btn-sm.btn-cart").next().toggle();
     },
     updateCartData(item, status) {
       switch(status){
@@ -213,9 +220,6 @@ new Vue({
       },2000);
       
     },
-    stopPropagation(e) {
-      console.log(e)
-    }
   },
 	created() {
     this.getProducts();
