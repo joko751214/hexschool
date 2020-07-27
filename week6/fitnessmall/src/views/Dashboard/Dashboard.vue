@@ -1,0 +1,49 @@
+<template>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <router-link to="/admin" class="navbar-brand logo">後台首頁</router-link>
+      <!-- <a class="navbar-brand logo" href="#">首頁</a> -->
+      <!-- .navbar-toggler 漢堡式選單按鈕-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+        <!-- .navbar-toggler-icon 漢堡式選單Icon-->
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- .collapse.navbar-collapse 用於外層中斷點群組和隱藏導覽列內容-->
+      <!-- 選單項目&漢堡式折疊選單 -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">回到前台</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/products">產品列表</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/orders">訂單列表</router-link>
+          </li>
+          <!-- 這邊是文章介紹專區，之後再規劃 -->
+          <!-- .dropdown Navbar選項使用下拉式選單
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+            href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">文章介紹</a>
+            .dropdown-menu 下拉選單內容
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else</a>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </nav>
+  <router-view/>
+  </div>
+</template>
+
+<script>
+export default {
+
+};
+</script>
