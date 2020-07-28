@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import VueSwal from 'vue-swal';
 import App from './App.vue';
 import router from './router';
 
@@ -15,6 +16,7 @@ Vue.component('loading', Loading);
 
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
+Vue.use(VueSwal);
 
 new Vue({
   router,

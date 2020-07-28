@@ -2,14 +2,12 @@
   <div class="row product">
     <loading :active.sync="isLoading"></loading>
     <div class="col-sm col-md-4 col-sm-4" v-for="product in products" :key="product.id">
-      <img class="imgSize" :src="product.imageUrl[0]" alt=""/>
+      <img class="size" :src="product.imageUrl[0]" alt=""/>
       <div class="title">{{product.title}}</div>
       <div class="price">{{product.price | money}}</div>
-      <!-- <button class="btn btn-outline-primary mt-2
-      float-left" @click="openModal('content', product)">
-        <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i>
-        查看內容
-      </button> -->
+      <router-link :to="`/product/${product.id}`"
+      class="btn btn-outline-primary float-left" :isLoading="isLoading">查看內容</router-link>
+        <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
       <!-- <button class="btn btn-outline-danger mt-2 float-right" @click="addToCart(product)">
         <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i>
         加入購物車
@@ -61,7 +59,7 @@ text-align: center;
 .product .col-sm {
   padding: 10px;
 }
-.imgSize {
+.size {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
