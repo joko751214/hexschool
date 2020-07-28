@@ -1,4 +1,5 @@
 <template>
+  <!-- 目前發現漢堡選單沒有辦法展開 -->
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <router-link to="/" class="navbar-brand logo">首頁</router-link>
@@ -43,6 +44,7 @@
           <button class="btn btn-sm btn-cart">
             <router-link class="nav-link" to="/cart">
               <font-awesome-icon class="text-light fa-2x" icon="shopping-cart" />
+              <!-- 這邊剩下接收購物車清單長度的部分 -->
               <span class="badge badge-pill badge-danger">1</span>
             </router-link>
           </button>

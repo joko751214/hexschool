@@ -38,7 +38,7 @@ const routes = [
   },
   {
     path: '/admin',
-    component: () => import('../views/Dashboard/Dashboard.vue'),
+    component: () => import('../views/Dashboard.vue'),
     children: [
       {
         path: 'products',
@@ -49,6 +49,10 @@ const routes = [
         component: () => import('../views/Dashboard/Orders.vue'),
       },
     ],
+  },
+  {
+    path: '/login',
+    component: () => import('../views//Dashboard/Login.vue'),
   },
 ];
 

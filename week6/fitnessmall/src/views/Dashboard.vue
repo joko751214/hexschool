@@ -1,4 +1,5 @@
 <template>
+  <!-- 目前發現漢堡選單沒有辦法展開 -->
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <router-link to="/admin" class="navbar-brand logo">後台首頁</router-link>
@@ -23,27 +24,47 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/admin/orders">訂單列表</router-link>
           </li>
-          <!-- 這邊是文章介紹專區，之後再規劃 -->
-          <!-- .dropdown Navbar選項使用下拉式選單
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
-            href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">文章介紹</a>
-            .dropdown-menu 下拉選單內容
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else</a>
-            </div>
-          </li> -->
+          <li class="nav-item">
+            <a href="#" class="nav-link" @click.prevent="signout">登出</a>
+          </li>
         </ul>
       </div>
     </nav>
-  <router-view/>
+  <router-view :token=token v-if="checkSuccess"/>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      token: '',
+      checkSuccess: false,
+    };
+  },
+  methods: {
+    signout() {
+      document.cookie = 'hexToken=;expires=;';
+      this.$router.push('/login');
+    },
+    checkAuth() {
+      // eslint-disable-next-line
+      this.token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
+      this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+
+      const url = `${process.env.VUE_APP_APIPATH}/auth/check`;
+      this.$http.post(url, {
+        api_token: this.token,
+      }).then(() => {
+        this.checkSuccess = true;
+      }).catch(() => {
+        this.$router.push('/login');
+      });
+    },
+  },
+  created() {
+    this.checkAuth();
+  },
 };
 </script>

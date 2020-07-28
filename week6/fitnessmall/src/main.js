@@ -12,10 +12,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 // eslint-disable-next-line object-curly-newline
-import { ValidationObserver, ValidationProvider, configure, extend, VeeValidate } from 'vee-validate';
-import zhTW from 'vee-validate/dist/locale/zh_TW.json';
+import { ValidationObserver, ValidationProvider, configure, extend } from 'vee-validate';
+// import zhTW from 'vee-validate/dist/locale/zh_TW.json';
 import VueI18n from 'vue-i18n';
-import { required } from 'vee-validate/dist/rules';
+import * as rules from 'vee-validate/dist/rules';
 import App from './App.vue';
 import router from './router';
 
@@ -37,21 +37,14 @@ const i18n = new VueI18n({
   locale: 'zhTW',
 });
 
-Vue.use(VeeValidate, {
-  events: 'input|blur',
-  i18n,
-  dictionary: {
-    zhTW,
-  },
-});
-
 // Form表單驗證
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
 // 添加規則
-extend('required', required);
-// // extend('email', email);
+Object.keys(rules).forEach((rule) => {
+  extend(rule, rules[rule]);
+});
 
 // 加入 Bootstrap 樣式設定
 configure({

@@ -1,4 +1,5 @@
 <template>
+  <!-- 目前剩下導入中文的驗證內容 -->
   <div class="p-3">
     <div class="col-md-12">
       <div class="mb-2">
