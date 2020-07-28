@@ -30,6 +30,10 @@ const routes = [
         path: 'cart',
         component: () => import('../views/Cart.vue'),
       },
+      {
+        path: 'checkform',
+        component: () => import('../views/CheckForm.vue'),
+      },
     ],
   },
   {

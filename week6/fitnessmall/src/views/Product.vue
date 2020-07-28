@@ -2,15 +2,15 @@
   <div class="row mt-3">
     <div class="col-md">
       <h5 class="modal-title" id="tempProductModalLabel">{{product.title}}</h5>
-      <img class="imgSize mt-3" :src="product.imageUrl[0]">
+      <img class="imgSize mt-3" :src="product.imageUrl">
       <div class="text-center mt-3">
         <p>{{product.content}}</p>
         <p class="text-muted"
         style="font-size: 8px;">{{product.description}}</p>
         <p class="price">$ {{product.price}}</p>
       </div>
-      <select v-model="product.num" class="form-control mt-3">
-        <option value="" disabled selected="selected">
+      <select v-model="amount" class="form-control mt-3">
+        <option value="0" disabled selected="selected">
           請選擇數量
         </option>
         <option v-for="num in 10" :key="num" :value="num" >
@@ -18,12 +18,12 @@
         </option>
       </select>
       <div class="modal-footer">
-        <div v-if="product.num" class="text-muted">
+        <div v-if="amount" class="text-muted">
           小計
-          <strong>{{ product.num * product.price }} 元</strong>
+          <strong>{{ amount * product.price }} 元</strong>
         </div>
         <button type="button" class="btn btn-primary"
-        @click="addToCart(product, product.num)">加到購物車</button>
+        @click="addToCart(product, amount)">加到購物車</button>
       </div>
     </div>
   </div>
@@ -34,8 +34,8 @@ export default {
   props: ['isLoading'],
   data() {
     return {
-      product: {
-      },
+      product: {},
+      amount: 0,
     };
   },
   methods: {
@@ -67,9 +67,17 @@ export default {
             '請至購物車結帳',
             'success',
           );
-          // this.isLoading = false;
-          // this.statusId = '';
+        })
+        .catch((err) => {
+          console.log('錯誤:', err);
+          this.$swal(
+            '商品重複',
+            err.response.data.errors[0],
+            'error',
+          );
         });
+      // this.isLoading = false;
+      // this.statusId = '';
     },
   },
   created() {

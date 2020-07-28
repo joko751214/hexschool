@@ -2,7 +2,6 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <router-link to="/" class="navbar-brand logo">首頁</router-link>
-      <!-- <a class="navbar-brand logo" href="#">首頁</a> -->
       <!-- .navbar-toggler 漢堡式選單按鈕-->
       <button class="navbar-toggler" type="button" data-toggle="collapse"
       data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -25,11 +24,6 @@
             <router-link class="nav-link" to="/contactus">聯絡我們</router-link>
           </li>
           <li class="nav-item">
-            <!-- 這邊之後會用購物車的icon來呈現 -->
-            <router-link class="nav-link" to="/cart">購物車</router-link>
-          </li>
-          <li class="nav-item">
-            <!-- 這邊之後會用購物車的icon來呈現 -->
             <router-link class="nav-link" to="/admin">後台管理頁面</router-link>
           </li>
           <!-- 這邊是文章介紹專區，之後再規劃 -->
@@ -44,6 +38,14 @@
               <a class="dropdown-item" href="#">Something else</a>
             </div>
           </li> -->
+        </ul>
+        <ul class="navbar-nav">
+          <button class="btn btn-sm btn-cart">
+            <router-link class="nav-link" to="/cart">
+              <font-awesome-icon class="text-light fa-2x" icon="shopping-cart" />
+              <span class="badge badge-pill badge-danger">1</span>
+            </router-link>
+          </button>
         </ul>
       </div>
     </nav>
