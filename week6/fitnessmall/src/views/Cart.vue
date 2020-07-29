@@ -42,14 +42,14 @@
               </div>
             </td>
             <td class="align-middle">{{cart.product.unit}}</td>
-            <td class="align-middle">{{cart.product.price * cart.quantity | money}}</td>
+            <td class="align-middle">{{cart.product.price * cart.quantity | currency}}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <td colspan="3"></td>
             <td>總計</td>
-            <td>{{totalPrice | money}}</td>
+            <td>{{totalPrice | currency}}</td>
           </tr>
         </tfoot>
       </table>

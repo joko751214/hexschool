@@ -12,10 +12,13 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 // eslint-disable-next-line object-curly-newline
-import { ValidationObserver, ValidationProvider, configure, extend } from 'vee-validate';
-// import zhTW from 'vee-validate/dist/locale/zh_TW.json';
-import VueI18n from 'vue-i18n';
+import { ValidationObserver, ValidationProvider, configure, extend, localize } from 'vee-validate';
+import zhTW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
+// 載入filter
+import currencyFilter from './filters/currency';
+// bus
+import './bus';
 import App from './App.vue';
 import router from './router';
 
@@ -25,23 +28,17 @@ library.add(fas, far);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.component('loading', Loading);
+Vue.filter('currency', currencyFilter);
 
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(VueSwal);
 
-// 使用多國語系
-Vue.use(VueI18n);
-
-const i18n = new VueI18n({
-  locale: 'zhTW',
-});
-
 // Form表單驗證
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
-// 添加規則
+// 添加驗證規則
 Object.keys(rules).forEach((rule) => {
   extend(rule, rules[rule]);
 });
@@ -56,8 +53,10 @@ configure({
   },
 });
 
+// 加入驗證的中文內容
+localize('tw', zhTW);
+
 new Vue({
-  i18n,
   router,
   render: (h) => h(App),
 }).$mount('#app');

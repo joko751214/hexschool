@@ -4,14 +4,15 @@
     <div class="col-sm col-md-4 col-sm-4" v-for="product in products" :key="product.id">
       <img class="size" :src="product.imageUrl[0]" alt=""/>
       <div class="title">{{product.title}}</div>
-      <div class="price">{{product.price | money}}</div>
+      <div class="price">{{product.price | currency}}</div>
       <router-link :to="`/product/${product.id}`"
-      class="btn btn-outline-primary float-left" :isLoading="isLoading">查看內容</router-link>
+      class="btn btn-outline-primary float-left" ref="add">查看內容</router-link>
         <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
-      <!-- <button class="btn btn-outline-danger mt-2 float-right" @click="addToCart(product)">
-        <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i>
+      <button class="btn btn-outline-danger mt-2 float-right"
+      @click="addToCart(product)">
+        <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
         加入購物車
-      </button> -->
+      </button>
     </div>
   </div>
 </template>
@@ -24,20 +25,12 @@ export default {
       isLoading: false,
     };
   },
-  filters: {
-    money(num) {
-      const parts = num.toString().split('.');
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      return `$ ${parts.join('.')}`;
-    },
-  },
   methods: {
     getProducts(page = 1) {
       this.isLoading = true;
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
       this.$http.get(url)
         .then((res) => {
-          console.log(res);
           this.products = res.data.data;
           this.isLoading = false;
         }).catch((err) => {
@@ -47,6 +40,10 @@ export default {
   },
   created() {
     this.getProducts();
+    console.log(this.$refs);
+  },
+  mounted() {
+    console.log(this.$refs);
   },
 };
 </script>

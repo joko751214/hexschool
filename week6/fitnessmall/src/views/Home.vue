@@ -45,20 +45,29 @@
             <router-link class="nav-link" to="/cart">
               <font-awesome-icon class="text-light fa-2x" icon="shopping-cart" />
               <!-- 這邊剩下接收購物車清單長度的部分 -->
-              <span class="badge badge-pill badge-danger">1</span>
+              <span class="badge badge-pill badge-danger">{{cartNum}}</span>
             </router-link>
           </button>
         </ul>
       </div>
     </nav>
-  <router-view/>
+  <router-view ref="getCartNum"/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Home',
+  data() {
+    return {
+      cartNum: 0,
+    };
+  },
   components: {
+  },
+  methods: {
+  },
+  created() {
   },
 };
 </script>

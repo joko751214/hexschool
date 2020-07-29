@@ -31,7 +31,6 @@
 
 <script>
 export default {
-  props: ['isLoading'],
   data() {
     return {
       product: {},
@@ -69,7 +68,6 @@ export default {
           );
         })
         .catch((err) => {
-          console.log('錯誤:', err);
           this.$swal(
             '商品重複',
             err.response.data.errors[0],
@@ -83,7 +81,6 @@ export default {
   created() {
     const { id } = this.$route.params;
     this.getProduct(id);
-    console.log('isLoading:', this.isLoading);
   },
 };
 </script>

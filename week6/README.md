@@ -16,3 +16,10 @@
   * 產品管理頁面 /admin/product
   * 優惠券管理頁面 /admin/coupons
   * 訂單管理頁面 /admin/manage
+
+### 安裝套件
+1.vue-loading-overlay
+2.axios
+3.bootstrap
+4.font-awesome
+5.vue-swal
