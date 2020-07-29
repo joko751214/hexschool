@@ -18,15 +18,15 @@
   * 訂單管理頁面 /admin/manage
 
 ### 安裝套件
-1.vue-loading-overlay
-2.axios
-3.bootstrap
-4.font-awesome
-5.vue-swal
+1. vue-loading-overlay
+2. axios
+3. bootstrap
+4. font-awesome
+5. vue-swal
 
 ### 未完善功能
-1.將vue-loading-overlay傳遞到每個元件內，而不需要再多添加一個loading tag
-2.購物車右邊浮現的數字目前還沒辦法隨時更新，只能透過點選之後，數字才會更新
-3.products的 "加入購物車按鈕"，不知道能不能使用product裡面的方法
-4.透過login登入頁面之後，整個畫面的樣式會跑掉，目前不知道是什麼原因
-5.home & dashboard 的漢堡選單目前還沒辦法展開
+1. 將vue-loading-overlay傳遞到每個元件內，而不需要再多添加一個loading tag
+2. 購物車右邊浮現的數字目前還沒辦法隨時更新，只能透過點選之後，數字才會更新
+3. products的 "加入購物車按鈕"，不知道能不能使用product裡面的方法
+4. 透過login登入頁面之後，整個畫面的樣式會跑掉，目前不知道是什麼原因
+5. home & dashboard 的漢堡選單目前還沒辦法展開
