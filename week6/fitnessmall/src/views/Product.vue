@@ -46,11 +46,9 @@ export default {
         .then((res) => {
           this.product = res.data.data;
           // this.isLoading = false;
-          // this.statusId = '';
         });
     },
     addToCart(item, num = 1) {
-      this.statusId = item.id;
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`;
 
       const parm = {
@@ -75,7 +73,6 @@ export default {
           );
         });
       // this.isLoading = false;
-      // this.statusId = '';
     },
   },
   created() {

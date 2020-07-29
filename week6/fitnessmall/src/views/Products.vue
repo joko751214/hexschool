@@ -6,7 +6,7 @@
       <div class="title">{{product.title}}</div>
       <div class="price">{{product.price | currency}}</div>
       <router-link :to="`/product/${product.id}`"
-      class="btn btn-outline-primary float-left" ref="add">查看內容</router-link>
+      class="btn btn-outline-primary float-left">查看內容</router-link>
         <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
       <button class="btn btn-outline-danger mt-2 float-right"
       @click="addToCart(product)">
@@ -37,13 +37,34 @@ export default {
           console.log(err);
         });
     },
+    addToCart(item) {
+      const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`;
+
+      const parm = {
+        product: item.id,
+        quantity: 1,
+      };
+
+      // this.isLoading = true;
+      this.$http.post(url, parm)
+        .then(() => {
+          this.$swal(
+            '產品添加成功',
+            '請至購物車結帳',
+            'success',
+          );
+        })
+        .catch((err) => {
+          this.$swal(
+            '商品重複',
+            err.response.data.errors[0],
+            'error',
+          );
+        });
+    },
   },
   created() {
     this.getProducts();
-    console.log(this.$refs);
-  },
-  mounted() {
-    console.log(this.$refs);
   },
 };
 </script>
