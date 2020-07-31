@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class='container'>
     <form @submit.prevent='signin'>
-      <h3 class='mb-3'>請先登入</h3>
+      <h3 class='mb-5'>請先登入</h3>
       <div class="form-group">
           <label for="inputEmail" class="sr-only">Email address</label>
           <input type="email" v-model='user.email' class="form-control"
@@ -49,13 +49,11 @@ export default {
 </script>
 
 <style>
-html, body{
-  height: 100%;
-  text-align: center;
-}
-body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+form{
+  width: 300px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%)
 }
 </style>
