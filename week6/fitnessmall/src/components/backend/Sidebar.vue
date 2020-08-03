@@ -1,7 +1,5 @@
 <template>
-  <!-- 目前發現漢堡選單沒有辦法展開 -->
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <router-link to="/admin" class="navbar-brand logo">後台首頁</router-link>
       <!-- <a class="navbar-brand logo" href="#">首頁</a> -->
       <!-- .navbar-toggler 漢堡式選單按鈕-->
@@ -22,6 +20,9 @@
             <router-link class="nav-link" to="/admin/products">產品列表</router-link>
           </li>
           <li class="nav-item">
+            <router-link class="nav-link" to="/admin/coupons">優惠券列表</router-link>
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" to="/admin/orders">訂單列表</router-link>
           </li>
           <li class="nav-item">
@@ -30,41 +31,14 @@
         </ul>
       </div>
     </nav>
-  <router-view :token=token v-if="checkSuccess"/>
-  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      token: '',
-      checkSuccess: false,
-    };
-  },
-  methods: {
-    signout() {
-      document.cookie = 'hexToken=;expires=;';
-      this.$router.push('/login');
-    },
-    checkAuth() {
-      // eslint-disable-next-line
-      this.token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
-      this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
-
-      const url = `${process.env.VUE_APP_APIPATH}/auth/check`;
-      this.$http.post(url, {
-        api_token: this.token,
-      }).then(() => {
-        this.checkSuccess = true;
-      }).catch(() => {
-        this.$router.push('/login');
-      });
-    },
-  },
-  created() {
-    this.checkAuth();
-  },
 };
 </script>
+
+<style>
+
+</style>

@@ -27,9 +27,17 @@ Vue.config.productionTip = false;
 library.add(fas, far);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-Vue.component('loading', Loading);
 Vue.filter('currency', currencyFilter);
 
+Vue.use(Loading, {
+  canCancel: true, // default false
+  color: '#000000',
+  loader: 'dots',
+  width: 64,
+  height: 64,
+  backgroundColor: '#ffffff',
+  opacity: 0.5,
+});
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(VueSwal);
