@@ -35,7 +35,15 @@
 
 <script>
 export default {
+  methods: {
+    signout() {
+      document.cookie = 'hexToken=;expires=;';
+      this.$router.push('/login');
+    },
+  },
+  created() {
 
+  },
 };
 </script>
 

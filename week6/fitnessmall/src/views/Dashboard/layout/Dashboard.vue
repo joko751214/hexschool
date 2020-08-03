@@ -22,10 +22,6 @@ export default {
     };
   },
   methods: {
-    signout() {
-      document.cookie = 'hexToken=;expires=;';
-      this.$router.push('/login');
-    },
     checkAuth() {
       // eslint-disable-next-line
       this.token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');

@@ -31,7 +31,7 @@ export default {
   methods: {
     signin() {
       const apiUrl = `${process.env.VUE_APP_APIPATH}/auth/login`;
-
+      const loader = this.$loading.show();
       this.$http.post(apiUrl, this.user)
         .then((res) => {
           const { expired } = res.data;
@@ -40,6 +40,7 @@ export default {
           document.cookie = `hexToken=${token}; expires=${new Date(expired * 1000)}; path=/`;
           // 跳轉畫面
           this.$router.push('admin/products');
+          loader.hide();
         }).catch((error) => {
           console.log(error);
         });

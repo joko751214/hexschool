@@ -1,6 +1,5 @@
 <template>
   <div class="row product">
-    <loading :active.sync="isLoading"></loading>
     <div class="col-sm col-md-4 col-sm-4" v-for="product in products" :key="product.id">
       <img class="size" :src="product.imageUrl[0]" alt=""/>
       <div class="title">{{product.title}}</div>
@@ -22,17 +21,16 @@ export default {
   data() {
     return {
       products: [],
-      isLoading: false,
     };
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading = true;
+      const loader = this.$loading.show();
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
       this.$http.get(url)
         .then((res) => {
           this.products = res.data.data;
-          this.isLoading = false;
+          loader.hide();
         }).catch((err) => {
           console.log(err);
         });

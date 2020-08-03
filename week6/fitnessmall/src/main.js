@@ -3,9 +3,11 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import jquery from 'jquery';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'bootstrap';
 import VueSwal from 'vue-swal';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -21,6 +23,9 @@ import currencyFilter from './filters/currency';
 import './bus';
 import App from './App.vue';
 import router from './router';
+
+// 將jquery設為全域
+window.$ = jquery;
 
 Vue.config.productionTip = false;
 

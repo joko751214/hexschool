@@ -35,10 +35,14 @@
           </tr>
       </tbody>
     </table>
+
+    <ProductModal></ProductModal>
   </div>
 </template>
 
 <script>
+import ProductModal from '@/components/ProductModal.vue';
+
 export default {
   props: ['token'],
   data() {
@@ -60,6 +64,28 @@ export default {
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           loader.hide();
         });
+    },
+    openModal(status, item) {
+      switch (status) {
+        case 'new':
+          this.tempProduct = {
+            imageUrl: [],
+          };
+          $('#productModal').modal('show');
+          break;
+
+        case 'edit':
+          this.tempProduct = Object.assign({}, item);
+          this.$refs.productModal.getProduct(this.tempProduct.id)
+          break;
+
+        case 'delete':
+          this.tempProduct = Object.assign({}, item);
+          $('#deleteModal').modal('show');
+          break;
+        default:
+          break;
+      }
     },
   },
   created() {
