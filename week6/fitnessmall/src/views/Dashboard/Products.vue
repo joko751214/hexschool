@@ -36,28 +36,50 @@
       </tbody>
     </table>
 
-    <ProductModal></ProductModal>
+    <Pagination @emit-pages='getProducts' :pages='pagination'/>
+
+    <ProductModal :temp-product='tempProduct' :token='token'
+    ref='productModal' @update="getProducts"/>
+
+    <DeleteModal :temp-product='tempProduct' :token='token' @update='getProducts'/>
+
   </div>
 </template>
 
 <script>
+/* global $ */
 import ProductModal from '@/components/ProductModal.vue';
+import DeleteModal from '@/components/DeleteModal.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
+  components: {
+    ProductModal,
+    DeleteModal,
+    Pagination,
+  },
   props: ['token'],
   data() {
     return {
       products: [],
       pagination: {},
+      tempProduct: {
+        imageUrl: [],
+      },
     };
   },
   methods: {
     getProducts(page = 1) {
-      const apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/products?page=${page}`;
+      const apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/products`;
+      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
 
-      // this.$http.defaults.headers['Authorization'] = `Bearer ${this.user.token}`;
+      const params = {
+        // eslint-disable-next-line object-shorthand
+        page: page,
+        paged: 10,
+      };
       const loader = this.$loading.show();
-      this.$http.get(apiUrl)
+      this.$http.get(apiUrl, { params })
         .then((res) => {
           console.log(res);
           this.products = res.data.data; // 取得產品列表
@@ -72,11 +94,12 @@ export default {
             imageUrl: [],
           };
           $('#productModal').modal('show');
+          this.$refs.productModal.getProduct();
           break;
 
         case 'edit':
           this.tempProduct = Object.assign({}, item);
-          this.$refs.productModal.getProduct(this.tempProduct.id)
+          this.$refs.productModal.getProduct(this.tempProduct.id);
           break;
 
         case 'delete':
