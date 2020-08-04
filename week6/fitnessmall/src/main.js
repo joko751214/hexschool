@@ -47,6 +47,8 @@ Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(VueSwal);
 
+Vue.component('Loading', Loading);
+
 // Form表單驗證
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);

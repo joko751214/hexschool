@@ -1,7 +1,8 @@
 <template>
   <div>
+    <Loading :active.sync="isLoading" />
     <div class="text-right mt-4">
-      <button type="button" class="btn btn-primary" @click='openModal'>建立新的產品</button>
+      <button type="button" class="btn btn-primary" @click="openModal('new')">建立新的產品</button>
     </div>
     <table class="table mt-4">
       <thead class="thead-dark">
@@ -61,19 +62,19 @@
                   class="form-control" id="category" placeholder="請輸入優惠碼" required>
                 </div>
                 <div class="form-group">
-                  <label for="unit">到期日</label>
+                  <label for="due_date">到期日</label>
                   <input type="date" v-model='due_date'
-                  class="form-control" id="unit" placeholder="請輸入單位">
+                  class="form-control" id="due_date">
                 </div>
                 <div class="form-group">
-                  <label for="origin_price">到期時間</label>
+                  <label for="due_time">到期時間</label>
                   <input type="time" v-model='due_time'
-                  class="form-control" id="origin_price" placeholder="請輸入原價">
+                  class="form-control" id="due_time">
                 </div>
                 <div class="form-group">
-                  <label for="price">折扣百分比</label>
+                  <label for="percent">折扣百分比</label>
                   <input type="text" v-model='tempCoupon.percent'
-                  class="form-control" id="price" placeholder="請輸入折扣數量">
+                  class="form-control" id="percent" placeholder="請輸入折扣數量">
                 </div>
                 <div class="form-check">
                   <input type="checkbox" v-model='tempCoupon.enabled'
@@ -85,9 +86,9 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" @click="updateCoupon(tempCoupon.id)">
               <!-- <b-spinner small type='grow' v-if='status'></b-spinner> -->
-              新增優惠券
+              <span>新增優惠券</span>
             </button>
           </div>
         </div>
@@ -113,6 +114,7 @@ export default {
       },
       due_date: '',
       due_time: '',
+      isLoading: false,
     };
   },
   methods: {
@@ -126,27 +128,62 @@ export default {
             enabled: false,
             deadline_at: '',
           };
+          this.due_date = '';
+          this.due_time = '';
+          $('#couponModal').modal('show');
           break;
-        case 'edit': {
-          this.tempCoupon = Object.assign({}, item);
-          const deadline = this.tempCoupon.deadline.datetime.split(' ');
-          [this.due_date, this.due_time] = deadline;
-          console.log(this.due_date, this.due_time);
-        }
+        case 'edit':
+          this.getCoupon(item.id);
           break;
         default:
           break;
       }
-      $('#couponModal').modal('show');
     },
     getCoupons() {
       const apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupons`;
       this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
 
+      this.isLoading = true;
       this.$http.get(apiUrl)
         .then((res) => {
-          console.log('res:', res);
           this.coupons = res.data.data;
+          console.log(this.coupons);
+          this.isLoading = false;
+        });
+    },
+    getCoupon(id) {
+      const apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${id}`;
+      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
+
+      this.isLoading = true;
+      this.$http.get(apiUrl)
+        .then((res) => {
+          this.tempCoupon = res.data.data;
+          const deadline = this.tempCoupon.deadline.datetime.split(' ');
+          [this.due_date, this.due_time] = deadline;
+          this.isLoading = false;
+          $('#couponModal').modal('show');
+        });
+    },
+    updateCoupon(id) {
+      let apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon`;
+      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
+      let httpMethod = 'post';
+
+      if (id) {
+        apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupon/${id}`;
+        httpMethod = 'patch';
+      }
+      this.tempCoupon.deadline_at = `${this.due_date} ${this.due_time}`;
+      // const datetime = new Date(this.tempCoupon.deadline_at);
+      // console.log(datetime);
+      // console.log(this.due_time);
+      // console.log(this.tempCoupon);
+      this.isLoading = true;
+      this.$http[httpMethod](apiUrl, this.tempCoupon)
+        .then((res) => {
+          this.coupons = res.data.data;
+          this.isLoading = false;
         });
     },
   },
