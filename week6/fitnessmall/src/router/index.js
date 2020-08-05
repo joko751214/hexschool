@@ -52,6 +52,10 @@ const routes = [
         path: 'orders',
         component: () => import('../views/Dashboard/Orders.vue'),
       },
+      {
+        path: 'storages',
+        component: () => import('../views/Dashboard/Storages.vue'),
+      },
     ],
   },
   {
