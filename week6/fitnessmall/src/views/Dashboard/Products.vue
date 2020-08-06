@@ -93,6 +93,7 @@ export default {
           this.tempProduct = {
             imageUrl: [],
           };
+          $('#customFile').val() = '';
           $('#productModal').modal('show');
           this.$refs.productModal.getProduct();
           break;

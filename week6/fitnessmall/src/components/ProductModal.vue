@@ -25,8 +25,8 @@
                 </label>
                 <input id="customFile" ref="file" type="file"
                 class="form-control" @change="uploadFile">
+                <img class="img-fluid mt-5" :src="product.imageUrl[0]" alt="">
               </div>
-              <img class="img-fluid mt-3" :src="product.imageUrl" alt="">
             </div>
             <div class="col-sm-8">
               <div class="form-group">
@@ -96,7 +96,9 @@ export default {
   props: ['token', 'tempProduct'],
   data() {
     return {
-      product: {},
+      product: {
+        imageUrl: [],
+      },
       status: false,
     };
   },
@@ -140,23 +142,23 @@ export default {
       }
     },
     uploadFile() {
-      const uploadedFile = this.$refs.file.files[0];
+      const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage`;
+      this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
 
+      const uploadedFile = this.$refs.file.files[0];
       // 轉成Form Data
       const formData = new FormData();
-
       formData.append('file', uploadedFile);
 
-      const url = `https://course-ec-url.hexschool.io/api/${process.env.VUE_APP_UUID}/admin/storage`;
-
+      const loader = this.$loading.show();
       this.$http.post(url, formData, {
         // 聲明這段內容為form-data的格式
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }).then((res) => {
-        console.log(res);
         this.product.imageUrl.push(res.data.data.path);
+        loader.hide();
       }).catch((error) => {
         console.log('error:', error);
       });
