@@ -16,23 +16,33 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label for="imageUrl">輸入圖片網址</label>
-                <input id="imageUrl" v-model="product.imageUrl"
+                <input id="imageUrl" v-model="product.imageUrl[0]"
                 class="form-control" type="text" placeholder="請輸入圖片網址" >
               </div>
               <div class="form-group">
                 <label for="customFile">
                   或 上傳圖片
                 </label>
-                <input id="customFile" ref="file" type="file"
-                class="form-control" @change="uploadFile">
+                <input id="customFile"
+                ref="file"
+                type="file"
+                class="form-control"
+                @change="uploadFile">
                 <img class="img-fluid mt-5" :src="product.imageUrl[0]" alt="">
               </div>
             </div>
             <div class="col-sm-8">
-              <div class="form-group">
-                <label for="title">標題</label>
-                <input id="title" v-model="product.title"
-                class="form-control" type="text" placeholder="請輸入標題" required>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="title">標題</label>
+                  <input id="title" v-model="product.title"
+                  class="form-control" type="text" placeholder="請輸入標題" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inventory">庫存數量</label>
+                  <input id="inventory" v-model="product.options.inventory"
+                  class="form-control" type="text" placeholder="請輸入數量" required>
+                </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
@@ -72,7 +82,7 @@
               <div class="form-check">
                 <input class="form-check-input"
                 v-model="product.enabled" type="checkbox" id="enabled">
-                <label  class="form-check-label" for="enabled">是否啟用</label>
+                <label  class="form-check-label" for="enabled">是否上架</label>
               </div>
             </div>
           </div>
@@ -98,6 +108,9 @@ export default {
     return {
       product: {
         imageUrl: [],
+        options: {
+          inventory: 0,
+        },
       },
       status: false,
     };
@@ -113,7 +126,7 @@ export default {
         api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.product.id}`;
         httpMethod = 'patch';
       }
-
+      console.log(this.product);
       this.status = true;
       this.$http[httpMethod](api, this.product)
         .then(() => {
@@ -132,6 +145,7 @@ export default {
         this.$http.get(api)
           .then((res) => {
             this.product = res.data.data;
+            console.log(this.product);
             $('#productModal').modal('show');
             loader.hide();
           });

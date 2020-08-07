@@ -6,32 +6,38 @@
     <table class="table mt-4">
       <thead class="thead-dark">
           <tr>
-              <th width="120">分類</th>
+              <th>圖片</th>
+              <th>分類</th>
               <th>產品名稱</th>
-              <th width="120">原價</th>
-              <th width="120">售價</th>
-              <th width="100">是否啟用</th>
-              <th width="120">編輯</th>
+              <th>現貨數量</th>
+              <th>原價</th>
+              <th>售價</th>
+              <th>是否上架</th>
+              <th width='120'>操作</th>
           </tr>
       </thead>
       <tbody>
           <tr v-for='product in products' :key='product.id'>
-              <td>{{ product.category }}</td>
-              <td>{{ product.title }}</td>
-              <td>{{ product.origin_price }}</td>
-              <td>{{ product.price }}</td>
-              <td>
-                <span v-if='product.enabled' class="text-success">啟用</span>
-                <span v-else>未啟用</span>
-              </td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-outline-primary btn-sm"
-                  @click="openModal('edit', product)">編輯</button>
-                  <button type="button" class="btn btn-outline-danger btn-sm"
-                  @click="openModal('delete', product)">刪除</button>
-                </div>
-              </td>
+            <td width='100'>
+              <img :src="product.imageUrl[0]" class="img-fluid">
+            </td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.options }}</td>
+            <td>{{ product.origin_price }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+              <span v-if='product.enabled' class="text-success">上架</span>
+              <span v-else>不上架</span>
+            </td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                @click="openModal('edit', product)">編輯</button>
+                <button type="button" class="btn btn-outline-danger btn-sm"
+                @click="openModal('delete', product)">刪除</button>
+              </div>
+            </td>
           </tr>
       </tbody>
     </table>
@@ -65,6 +71,9 @@ export default {
       pagination: {},
       tempProduct: {
         imageUrl: [],
+        options: {
+          inventory: 0,
+        },
       },
     };
   },
@@ -93,12 +102,15 @@ export default {
           this.tempProduct = {
             imageUrl: [],
           };
-          $('#customFile').val() = '';
+
+          // 將 input 的內容重置
+          $('#customFile').val('');
           $('#productModal').modal('show');
           this.$refs.productModal.getProduct();
           break;
 
         case 'edit':
+          $('#customFile').val('');
           this.tempProduct = Object.assign({}, item);
           this.$refs.productModal.getProduct(this.tempProduct.id);
           break;
