@@ -126,7 +126,6 @@ export default {
         api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.product.id}`;
         httpMethod = 'patch';
       }
-      console.log(this.product);
       this.status = true;
       this.$http[httpMethod](api, this.product)
         .then(() => {
@@ -145,14 +144,9 @@ export default {
         this.$http.get(api)
           .then((res) => {
             this.product = res.data.data;
-            console.log(this.product);
             $('#productModal').modal('show');
             loader.hide();
           });
-      } else {
-        this.product = {
-          imageUrl: [],
-        };
       }
     },
     uploadFile() {

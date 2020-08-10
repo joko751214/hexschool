@@ -25,7 +25,7 @@
             <router-link class="nav-link" to="/contactus">聯絡我們</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin">後台管理頁面</router-link>
+            <router-link class="nav-link" to="/admin">登入</router-link>
           </li>
           <!-- 這邊是文章介紹專區，之後再規劃 -->
           <!-- .dropdown Navbar選項使用下拉式選單

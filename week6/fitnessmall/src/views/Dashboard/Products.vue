@@ -23,7 +23,7 @@
             </td>
             <td>{{ product.category }}</td>
             <td>{{ product.title }}</td>
-            <td>{{ product.options }}</td>
+            <td>{{ product.options.inventory }}</td>
             <td>{{ product.origin_price }}</td>
             <td>{{ product.price }}</td>
             <td>
@@ -101,6 +101,9 @@ export default {
         case 'new':
           this.tempProduct = {
             imageUrl: [],
+            options: {
+              inventory: 0,
+            },
           };
 
           // 將 input 的內容重置
