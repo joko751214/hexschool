@@ -1,9 +1,9 @@
 <template>
   <div class="row mt-3">
-    <div class="col-md">
+    <div class="col-md text-center">
       <h5 class="modal-title" id="tempProductModalLabel">{{product.title}}</h5>
-      <img class="imgSize mt-3" :src="product.imageUrl">
-      <div class="text-center mt-3">
+      <img class="mx-auto d-block mt-3" :src="product.imageUrl">
+      <div class="mt-3">
         <p>{{product.content}}</p>
         <p class="text-muted"
         style="font-size: 8px;">{{product.description}}</p>
@@ -83,10 +83,6 @@ export default {
 </script>
 
 <style>
-.imgSize {
-  height: 450px;
-  width: 450px;
-}
 .price {
   color: red;
 }

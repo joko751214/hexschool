@@ -147,6 +147,13 @@ export default {
             $('#productModal').modal('show');
             loader.hide();
           });
+      } else {
+        this.product = {
+          imageUrl: [],
+          options: {
+            inventory: 0,
+          },
+        };
       }
     },
     uploadFile() {

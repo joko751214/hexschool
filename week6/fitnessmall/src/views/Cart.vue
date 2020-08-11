@@ -1,11 +1,12 @@
 <template>
-  <div class="p-3" style="min-width: 600px;" data-offset="40">
-    <div class="col-md-12">
+  <div class="row justify-content-center" data-offset="40">
+    <div class="col-md-6 bg-white py-5">
       <div class="mb-2">
         <h4>已選擇商品</h4>
       </div>
       <div class="text-right">
         <button type="button" class="btn btn-outline-danger" @click="deleteCartList()">
+          <b-spinner small type='grow' v-if='status'></b-spinner>
           <font-awesome-icon :icon="['far', 'trash-alt']"/>刪除所有商品
         </button>
       </div>
@@ -24,6 +25,7 @@
             <td class="align-middle">
               <button type="button" class="btn btn-outline-danger btn-sm"
               @click="deleteCartList(cart.product)">
+                <b-spinner small type='grow' v-if='statusId === cart.product.id'></b-spinner>
                 <font-awesome-icon :icon="['far', 'trash-alt']"/>
               </button>
             </td>
@@ -66,6 +68,8 @@ export default {
     return {
       carts: [],
       totalPrice: 0,
+      status: false,
+      statusId: '',
     };
   },
   methods: {
@@ -76,11 +80,11 @@ export default {
           product: item.id,
         };
 
-        this.isLoading = true;
+        this.statusId = item.id;
         this.$http.delete(url, parm)
           .then(() => {
             this.getCartData();
-            this.isLoading = false;
+            this.statusId = '';
             this.$swal(
               '商品刪除',
               '可以再看看其他的',
@@ -90,11 +94,11 @@ export default {
       } else {
         const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`;
 
-        this.isLoading = true;
+        this.status = true;
         this.$http.delete(url)
           .then(() => {
             this.getCartData();
-            this.isLoading = false;
+            this.status = false;
             this.$swal(
               '商品清空',
               '目前商品已全數清空',
@@ -107,12 +111,16 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`;
 
       this.totalPrice = 0;
+
+      const loader = this.$loading.show();
       this.$http.get(url)
         .then((res) => {
+          console.log(res);
           this.carts = [...res.data.data];
           this.carts.forEach((item) => {
             this.totalPrice += item.product.price * item.quantity;
           });
+          loader.hide();
         })
         .catch((err) => {
           console.log(err);
@@ -138,11 +146,9 @@ export default {
         quantity: item.quantity,
       };
 
-      this.isLoading = true;
       this.$http.patch(url, parm)
         .then(() => {
           this.getCartData();
-          // this.isLoading = false;
           this.$swal(
             '產品更新成功',
             '請至購物車結帳',

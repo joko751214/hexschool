@@ -9,6 +9,7 @@
         <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
       <button class="btn btn-outline-danger mt-2 float-right"
       @click="addToCart(product)">
+        <b-spinner small type='grow' v-if='statusId === product.id'></b-spinner>
         <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
         加入購物車
       </button>
@@ -21,14 +22,16 @@ export default {
   data() {
     return {
       products: [],
+      statusId: '',
     };
   },
   methods: {
     getProducts(page = 1) {
       const loader = this.$loading.show();
-      const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
-      this.$http.get(url)
+      const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`;
+      this.$http.get(url, { params: { page } })
         .then((res) => {
+          console.log(res);
           this.products = res.data.data;
           loader.hide();
         }).catch((err) => {
@@ -36,6 +39,7 @@ export default {
         });
     },
     addToCart(item) {
+      this.statusId = item.id;
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`;
 
       const parm = {
@@ -43,9 +47,9 @@ export default {
         quantity: 1,
       };
 
-      // this.isLoading = true;
       this.$http.post(url, parm)
         .then(() => {
+          this.statusId = '';
           this.$swal(
             '產品添加成功',
             '請至購物車結帳',
@@ -53,6 +57,7 @@ export default {
           );
         })
         .catch((err) => {
+          this.statusId = '';
           this.$swal(
             '商品重複',
             err.response.data.errors[0],

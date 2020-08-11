@@ -54,9 +54,9 @@
 
 <script>
 /* global $ */
-import ProductModal from '@/components/ProductModal.vue';
-import DeleteModal from '@/components/DeleteModal.vue';
-import Pagination from '@/components/Pagination.vue';
+import ProductModal from '@/components/backend/ProductModal.vue';
+import DeleteModal from '@/components/backend/DeleteModal.vue';
+import Pagination from '@/components/backend/Pagination.vue';
 
 export default {
   components: {
