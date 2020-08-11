@@ -1,12 +1,12 @@
 <template>
-  <div class="p-3">
-    <div class="col-md-12">
+  <div class="row justify-content-center">
+    <div class="col-md-6 bg-white py-5">
       <div class="mb-2">
         <h4>訂單</h4>
       </div>
       <div>
         <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="confirm">
+          <form @submit.prevent="createOrder">
             <div class="form-group">
               <ValidationProvider rules="required"
               v-slot="{ errors, classes, passed }" class="form-group">
@@ -86,6 +86,19 @@ export default {
         message: '',
       },
     };
+  },
+  methods: {
+    createOrder() {
+      const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/orders`;
+
+      this.$http.post(api, this.form)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>

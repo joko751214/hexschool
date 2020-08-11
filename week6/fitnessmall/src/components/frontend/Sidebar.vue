@@ -41,7 +41,11 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      cartNum: 0,
+    };
+  },
 };
 </script>
 

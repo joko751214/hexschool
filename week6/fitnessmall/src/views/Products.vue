@@ -49,6 +49,7 @@ export default {
 
       this.$http.post(url, parm)
         .then(() => {
+          this.$bus.$emit('quantity', parm.quantity);
           this.statusId = '';
           this.$swal(
             '產品添加成功',
