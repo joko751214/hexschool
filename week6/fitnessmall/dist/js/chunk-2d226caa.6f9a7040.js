@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d226caa"],{e9bb:function(n,e,t){"use strict";t.r(e);var c=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("h1",[n._v("這是聯絡我們頁面")])},u=[],a={},l=a,r=t("2877"),s=Object(r["a"])(l,c,u,!1,null,null,null);e["default"]=s.exports}}]);
-//# sourceMappingURL=chunk-2d226caa.6f9a7040.js.map

@@ -38,29 +38,29 @@ const routes = [
   },
   {
     path: '/admin',
-    component: () => import('../views/Dashboard/layout/Dashboard.vue'),
+    component: () => import('../views/backend/layout/Dashboard.vue'),
     children: [
       {
         path: 'products',
-        component: () => import('../views/Dashboard/Products.vue'),
+        component: () => import('../views/backend/Products.vue'),
       },
       {
         path: 'coupons',
-        component: () => import('../views/Dashboard/Coupons.vue'),
+        component: () => import('../views/backend/Coupons.vue'),
       },
       {
         path: 'orders',
-        component: () => import('../views/Dashboard/Orders.vue'),
+        component: () => import('../views/backend/Orders.vue'),
       },
       {
         path: 'storages',
-        component: () => import('../views/Dashboard/Storages.vue'),
+        component: () => import('../views/backend/Storages.vue'),
       },
     ],
   },
   {
     path: '/login',
-    component: () => import('../views//Dashboard/Login.vue'),
+    component: () => import('../views//backend/Login.vue'),
   },
 ];
 
