@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="home">
       <Header/>
       <section id="section_about">
         <div class="container">

@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <nav class="navbar fixed-top navbar-expand-md navbar-top">
-      <div class="container"><a class="navbar-brand">FITNESSMALL</a>
-        <div class="collapse navbar-collapse">
-          <div class="nav navbar-nav ml-auto">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/">首頁 HOME</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/products">菜單 MENU</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/cart">購物車 CART</router-link>
-            </li>
-          </div>
+  <nav class="navbar fixed-top navbar-expand-md navbar-top">
+    <div class="container"><a class="navbar-brand">FITNESSMALL</a>
+      <div class="collapse navbar-collapse">
+        <div class="nav navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">首頁 HOME</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/products">菜單 MENU</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/cart">購物車 CART</router-link>
+          </li>
         </div>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
   <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <router-link to="/" class="navbar-brand logo">首頁</router-link>
     .navbar-toggler 漢堡式選單按鈕
