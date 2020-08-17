@@ -1,24 +1,34 @@
 <template>
-  <div class="row product">
-    <div class="col-sm col-md-4 col-sm-4" v-for="product in products" :key="product.id">
-      <img class="size" :src="product.imageUrl[0]" alt=""/>
-      <div class="title">{{product.title}}</div>
-      <div class="price">{{product.price | currency}}</div>
-      <router-link :to="`/product/${product.id}`"
-      class="btn btn-outline-primary float-left">查看內容</router-link>
-        <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
-      <button class="btn btn-outline-danger mt-2 float-right"
-      @click="addToCart(product)">
-        <b-spinner small type='grow' v-if='statusId === product.id'></b-spinner>
-        <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
-        加入購物車
-      </button>
+  <div>
+    <Header/>
+    <div class="container mt-5">
+      <div class="row product">
+        <div class="col-sm col-md-4 col-sm-4" v-for="product in products" :key="product.id">
+          <img class="size" :src="product.imageUrl[0]" alt=""/>
+          <div class="title">{{product.title}}</div>
+          <div class="price">{{product.price | currency}}</div>
+          <router-link :to="`/product/${product.id}`"
+          class="btn btn-outline-primary float-left">查看內容</router-link>
+            <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
+          <button class="btn btn-outline-danger mt-2 float-right"
+          @click="addToCart(product)">
+            <b-spinner small type='grow' v-if='statusId === product.id'></b-spinner>
+            <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
+            加入購物車
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Header from '@/components/frontend/Header.vue';
+
 export default {
+  components: {
+    Header,
+  },
   data() {
     return {
       products: [],

@@ -162,6 +162,7 @@ export default {
         },
       })
         .then((res) => {
+          console.log(res);
           this.filePath = res.data.data.path;
           this.tempStorage = res.data.data;
           loader.hide();
