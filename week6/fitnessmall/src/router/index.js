@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import Home from '../views/Home.vue';.
-import App from '../App.vue';
+import Home from '../views/frontend/layout/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -9,27 +8,27 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: App,
+    component: Home,
     children: [
       {
-        path: '/home',
-        component: () => import('../views/Home.vue'),
+        path: '',
+        component: () => import('../views/frontend/Homepage.vue'),
       },
       {
         path: 'products',
-        component: () => import('../views/Products.vue'),
+        component: () => import('../views/frontend/Products.vue'),
       },
       {
         path: 'product/:id',
-        component: () => import('../views/Product.vue'),
+        component: () => import('../views/frontend/Product.vue'),
       },
       {
         path: 'cart',
-        component: () => import('../views/Cart.vue'),
+        component: () => import('../views/frontend/Cart.vue'),
       },
       {
         path: 'checkform',
-        component: () => import('../views/CheckForm.vue'),
+        component: () => import('../views/frontend/CheckForm.vue'),
       },
     ],
   },

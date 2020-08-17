@@ -1,29 +1,31 @@
 <template>
-  <div class="row mt-3">
-    <div class="col-md text-center">
-      <h5 class="modal-title" id="tempProductModalLabel">{{product.title}}</h5>
-      <img class="mx-auto d-block mt-3" :src="product.imageUrl">
-      <div class="mt-3">
-        <p>{{product.content}}</p>
-        <p class="text-muted"
-        style="font-size: 8px;">{{product.description}}</p>
-        <p class="price">$ {{product.price}}</p>
-      </div>
-      <select v-model="amount" class="form-control mt-3">
-        <option value="0" disabled selected="selected">
-          請選擇數量
-        </option>
-        <option v-for="num in 10" :key="num" :value="num" >
-          選購 {{ num }} {{ product.unit }}
-        </option>
-      </select>
-      <div class="modal-footer">
-        <div v-if="amount" class="text-muted">
-          小計
-          <strong>{{ amount * product.price }} 元</strong>
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md text-center">
+        <h5 class="modal-title" id="tempProductModalLabel">{{product.title}}</h5>
+        <img class="mx-auto d-block mt-3" :src="product.imageUrl">
+        <div class="mt-3">
+          <p>{{product.content}}</p>
+          <p class="text-muted"
+          style="font-size: 8px;">{{product.description}}</p>
+          <p class="price">$ {{product.price}}</p>
         </div>
-        <button type="button" class="btn btn-primary"
-        @click="addToCart(product, amount)">加到購物車</button>
+        <select v-model="amount" class="form-control mt-3">
+          <option value="0" disabled selected="selected">
+            請選擇數量
+          </option>
+          <option v-for="num in 10" :key="num" :value="num" >
+            選購 {{ num }} {{ product.unit }}
+          </option>
+        </select>
+        <div class="modal-footer">
+          <div v-if="amount" class="text-muted">
+            小計
+            <strong>{{ amount * product.price }} 元</strong>
+          </div>
+          <button type="button" class="btn btn-primary"
+          @click="addToCart(product, amount)">加到購物車</button>
+        </div>
       </div>
     </div>
   </div>
