@@ -1,31 +1,66 @@
 <template>
   <div class="container mt-5">
-    <div class="row product">
-      <div class="col-sm col-md-4 col-sm-4" v-for="product in products" :key="product.id">
-        <img class="size" :src="product.imageUrl[0]" alt=""/>
-        <div class="title">{{product.title}}</div>
-        <div class="price">{{product.price | currency}}</div>
-        <router-link :to="`/product/${product.id}`"
-        class="btn btn-outline-primary float-left">查看內容</router-link>
-          <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
-        <button class="btn btn-outline-danger mt-2 float-right"
-        @click="addToCart(product)">
-          <b-spinner small type='grow' v-if='statusId === product.id'></b-spinner>
-          <!-- <i v-if="statusId === product.id" class="spinner-grow spinner-grow-sm"></i> -->
-          加入購物車
-        </button>
+    <div class="row product" v-if="products.length > 0">
+      <div class="col-md-4">
+        <ul class="list-group sticky-top rounded-0">
+          <a href="#"
+              class="list-group-item list-group-item-action"
+              @click.prevent="filterCategory = ''"
+              :class="{ active: filterCategory === '' }">
+            全部商品
+          </a>
+          <a class="list-group-item list-group-item-action"
+              href="#"
+              @click.prevent="filterCategory = item"
+              :class="{ active: item === filterCategory }"
+              v-for="item in categories"
+              :key="item">
+            {{ item }}
+          </a>
+        </ul>
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6" v-for="item in filterCategories" :key="item.id">
+            <div class="card border-0 mb-4 position-relative position-relative">
+              <img :src="item.imageUrl[0]" class="card-img-top rounded-0" alt="...">
+              <div class="card-body p-0">
+                <h4 class="mb-0 mt-3">
+                  <router-link :to="`/product/${item.id}`">{{item.title}}</router-link>
+                </h4>
+                <p class="card-text mb-0 price">NT{{item.price | currency}}
+                  <span class="text-muted "><del>NT{{item.origin_price | currency}}</del></span>
+                </p>
+                <button class="btn btn-outline-danger mt-2 btn-block"
+                @click="addToCart(item)">
+                  <b-spinner small type='grow' v-if='statusId === item.id'></b-spinner>
+                  加入購物車
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <router-link to="/cart" class="cart px-2 py-3 bg-dark">
+      <CartIcon />
+    </router-link>
   </div>
 </template>
 
 <script>
+import CartIcon from '@/components/frontend/CartIcon.vue';
 
 export default {
+  components: {
+    CartIcon,
+  },
   data() {
     return {
       products: [],
       statusId: '',
+      categories: ['沙拉', '早餐套餐', '水果拼盤'],
+      filterCategory: '',
     };
   },
   methods: {
@@ -70,6 +105,19 @@ export default {
         });
     },
   },
+  computed: {
+    filterCategories() {
+      if (this.filterCategory) {
+        return this.products.filter((item) => {
+          const data = item.category
+            .toLowerCase()
+            .includes(this.filterCategory.toLowerCase());
+          return data;
+        });
+      }
+      return this.products;
+    },
+  },
   created() {
     this.getProducts();
   },
@@ -77,19 +125,15 @@ export default {
 </script>
 
 <style>
-.product {
-padding: 20px 10px;
-text-align: center;
-}
-.product .col-sm {
-  padding: 10px;
-}
-.size {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
 .price {
   color: red;
+}
+.cart {
+  position: fixed;
+  right: 1%;
+  bottom: 10%;
+  border-radius: 50%;
+  /* background-color: #6b5139af; */
+  cursor: pointer;
 }
 </style>

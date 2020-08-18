@@ -1,10 +1,32 @@
 <template>
-  <div class="container">
-    <div class="row mt-3">
-      <div class="col-md text-center">
-        <h5 class="modal-title" id="tempProductModalLabel">{{product.title}}</h5>
-        <img class="mx-auto d-block mt-3" :src="product.imageUrl">
-        <div class="mt-3">
+  <div class="container mt-5 mb-5">
+    <div class="row align-items-center">
+      <div class="col-md-7">
+        <img :src="product.imageUrl" class="d-block w-100">
+        <p class="mt-3">{{product.content}}</p>
+        <p class="text-muted"
+        style="font-size: 8px;">{{product.description}}</p>
+      </div>
+      <div class="col-md-5">
+        <h2 class="font-weight-bold h1 mb-1">{{product.title}}</h2>
+        <p class="mb-0 text-muted text-right"><del>NT$ {{product.origin_price}}</del></p>
+        <p class="h4 font-weight-bold text-right price">NT$ {{product.price}}</p>
+        <div class="d-flex align-items-center mt-3">
+          <div class="input-group my-3 mr-2">
+            <select v-model="amount" class="form-control">
+              <option value="0" disabled selected="selected">
+                請選擇數量
+              </option>
+              <option v-for="num in 10" :key="num" :value="num" >
+                選購 {{ num }} {{ product.unit }}
+              </option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-primary btn-block"
+          @click="addToCart(product, amount)">加到購物車</button>
+        </div>
+      </div>
+        <!-- <div class="mt-3">
           <p>{{product.content}}</p>
           <p class="text-muted"
           style="font-size: 8px;">{{product.description}}</p>
@@ -25,8 +47,7 @@
           </div>
           <button type="button" class="btn btn-primary"
           @click="addToCart(product, amount)">加到購物車</button>
-        </div>
-      </div>
+        </div> -->
     </div>
   </div>
 </template>

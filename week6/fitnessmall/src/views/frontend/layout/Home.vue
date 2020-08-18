@@ -35,12 +35,12 @@ export default {
     $(window).scroll(() => {
       if ($(window).scrollTop() > 0) {
         $('.navbar').removeClass('navbar-top');
-        $('.navbar').addClass('navbar-light');
-        $('.navbar').addClass('bg-light');
+        $('.navbar').addClass('navbar-dark');
+        $('.navbar').addClass('bg-dark');
       } else {
         $('.navbar').addClass('navbar-top');
-        $('.navbar').removeClass('navbar-light');
-        $('.navbar').removeClass('bg-light');
+        $('.navbar').removeClass('navbar-dark');
+        $('.navbar').removeClass('bg-dark');
       }
     });
   },
