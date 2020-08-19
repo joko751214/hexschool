@@ -27,7 +27,11 @@ const routes = [
         component: () => import('../views/frontend/Cart.vue'),
       },
       {
-        path: 'checkform',
+        path: 'order',
+        component: () => import('../views/frontend/Order.vue'),
+      },
+      {
+        path: 'checkform/:orderId',
         component: () => import('../views/frontend/CheckForm.vue'),
       },
     ],

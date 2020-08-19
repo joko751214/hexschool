@@ -28,8 +28,8 @@
                 <h4 class="mb-0 mt-3">
                   <router-link :to="`/product/${item.id}`">{{item.title}}</router-link>
                 </h4>
-                <p class="card-text mb-0 price">NT{{item.price | currency}}
-                  <span class="text-muted "><del>NT{{item.origin_price | currency}}</del></span>
+                <p class="card-text mb-0 price">{{item.price | currency}}
+                  <span class="text-muted "><del>{{item.origin_price | currency}}</del></span>
                 </p>
                 <button class="btn btn-outline-danger mt-2 btn-block"
                 @click="addToCart(item)">

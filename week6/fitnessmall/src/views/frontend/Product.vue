@@ -9,8 +9,8 @@
       </div>
       <div class="col-md-5">
         <h2 class="font-weight-bold h1 mb-1">{{product.title}}</h2>
-        <p class="mb-0 text-muted text-right"><del>NT$ {{product.origin_price}}</del></p>
-        <p class="h4 font-weight-bold text-right price">NT$ {{product.price}}</p>
+        <p class="mb-0 text-muted text-right"><del>{{product.origin_price | currency}}</del></p>
+        <p class="h4 font-weight-bold text-right price">{{product.price | currency}}</p>
         <div class="d-flex align-items-center mt-3">
           <div class="input-group my-3 mr-2">
             <select v-model="amount" class="form-control">
@@ -26,28 +26,6 @@
           @click="addToCart(product, amount)">加到購物車</button>
         </div>
       </div>
-        <!-- <div class="mt-3">
-          <p>{{product.content}}</p>
-          <p class="text-muted"
-          style="font-size: 8px;">{{product.description}}</p>
-          <p class="price">$ {{product.price}}</p>
-        </div>
-        <select v-model="amount" class="form-control mt-3">
-          <option value="0" disabled selected="selected">
-            請選擇數量
-          </option>
-          <option v-for="num in 10" :key="num" :value="num" >
-            選購 {{ num }} {{ product.unit }}
-          </option>
-        </select>
-        <div class="modal-footer">
-          <div v-if="amount" class="text-muted">
-            小計
-            <strong>{{ amount * product.price }} 元</strong>
-          </div>
-          <button type="button" class="btn btn-primary"
-          @click="addToCart(product, amount)">加到購物車</button>
-        </div> -->
     </div>
   </div>
 </template>
@@ -64,11 +42,11 @@ export default {
     getProduct(id) {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`;
 
-      // this.isLoading = true;
+      const loader = this.$loading.show();
       this.$http.get(api)
         .then((res) => {
           this.product = res.data.data;
-          // this.isLoading = false;
+          loader.hide();
         });
     },
     addToCart(item, num = 1) {
