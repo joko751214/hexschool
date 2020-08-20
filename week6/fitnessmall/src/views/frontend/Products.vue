@@ -31,7 +31,7 @@
                 <p class="card-text mb-0 price">{{item.price | currency}}
                   <span class="text-muted "><del>{{item.origin_price | currency}}</del></span>
                 </p>
-                <button class="btn btn-outline-danger mt-2 btn-block"
+                <button class="btn btn-secondary mt-2 btn-block"
                 @click="addToCart(item)">
                   <b-spinner small type='grow' v-if='statusId === item.id'></b-spinner>
                   加入購物車
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <router-link to="/cart" class="cart px-2 py-3 bg-dark">
+    <router-link to="/cart" class="cart px-2 py-3 bg-primary">
       <CartIcon />
     </router-link>
   </div>

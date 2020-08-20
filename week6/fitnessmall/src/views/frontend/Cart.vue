@@ -1,19 +1,17 @@
 <template>
   <div class="container">
-    <div class="progress mt-5">
-      <div class="progress-bar progress-bar-striped
-      progress-bar-animated" role="progressbar" style="width: 75%"></div>
-    </div>
     <div class="row mt-5 mb-5 justify-content-center">
-      <div class="col-md-8 bg-white">
-        <h3>已選擇商品</h3>
-        <div class="text-right">
-          <button type="button" class="btn btn-outline-danger border-0" @click="deleteCartList()">
-            <i class="fas fa-times">
-              <b-spinner small type='grow' v-if='status'></b-spinner>
-            </i>
-            <!-- <font-awesome-icon :icon="['far', 'trash-alt']"/>刪除所有商品 -->
-          </button>
+      <div class="col-md-8">
+        <div class="row justify-content-between px-3 mb-3">
+          <h3>已選擇商品</h3>
+          <div class="text-right">
+            <button type="button" class="btn btn-outline-danger border-0" @click="deleteCartList()">
+              <i class="fas fa-times">
+                <b-spinner small type='grow' v-if='status'></b-spinner>
+              </i>
+              <!-- <font-awesome-icon :icon="['far', 'trash-alt']"/>刪除所有商品 -->
+            </button>
+          </div>
         </div>
         <table class="table">
           <thead>

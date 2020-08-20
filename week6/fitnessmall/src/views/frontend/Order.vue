@@ -71,7 +71,7 @@
                   <i class="fas fa-chevron-left mr-2"></i>
                   回到購物車
                 </router-link>
-                <button class="btn btn-primary" :disabled="invalid">送出表單</button>
+                <button class="btn btn-secondary" :disabled="invalid">送出表單</button>
               </div>
             </form>
           </ValidationObserver>

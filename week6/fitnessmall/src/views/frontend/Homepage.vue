@@ -49,8 +49,8 @@
         </div>
       </div>
     </section>
-    <section id="section_story">
-      <div class="container-fluid">
+    <div class="container">
+      <section id="section_story">
         <div class="row">
           <div class="col-sm-5 map"
           data-bottom-top="background-size: 150%;background-position: 0% 0%"
@@ -80,12 +80,15 @@
               </div>
             </div>
             <div class="col-sm-12">
-              <p>食物能夠傳遞喜悅與滿足。從蔬果產地、水質清洗到人工逐葉揀選，講究新鮮品質與食安衛生，無毒且口感水嫩清脆，打造安心且獨一無二的輕食品牌。</p>
+              <p>食物能夠傳遞喜悅與滿足。</p>
+              <p>從蔬果產地、水質清洗到人工逐葉揀選</p>
+              <p>講究新鮮品質與食安衛生，無毒且口感水嫩清脆</p>
+              <h4>打造安心且獨一無二的輕食品牌</h4>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
     <section class="jumbotron rounded-0">
     <div class="container">
       <h2>© FITNESSMAL 2020 All Rights Reserved.<br/>圖片為練習使用，無商業用途。</h2>
@@ -103,6 +106,35 @@ export default {
 </script>
 
 <style>
+section {
+  padding: 50px 0px;
+}
+
+section#section_about img {
+  width: 100%;
+}
+
+section#section_story {
+  background-color: #a6dcef;
+  color: white;
+  padding: 0;
+}
+section#section_story .col-sm-5 {
+  background-image: url(https://images.unsplash.com/photo-1576021182211-9ea8dced3690?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60);
+  background-size: 100% auto;
+  height: 400px;
+}
+section#section_story .col-sm-7 {
+  text-align: center;
+}
+section#section_story .col-sm-7 i {
+  font-size: 40px;
+}
+section#section_story .features {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
 section.jumbotron {
   margin-top: 50px;
   text-align: center;
@@ -119,4 +151,5 @@ section.jumbotron hr {
   max-width: 50px;
   border: 2px solid #ff6e3a;
 }
+
 </style>
