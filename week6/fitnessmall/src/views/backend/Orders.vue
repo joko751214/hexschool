@@ -40,26 +40,41 @@
           </tr>
       </tbody>
     </table>
+
+    <Pagination @emit-pages='getOrders' :pages='pagination'/>
   </div>
 </template>
 
 <script>
+import Pagination from '@/components/backend/Pagination.vue';
+
 export default {
   props: ['token'],
+  components: {
+    Pagination,
+  },
   data() {
     return {
       orders: '',
+      pagination: {},
     };
   },
   methods: {
-    getOrders() {
+    getOrders(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders`;
       this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
 
+      const params = {
+        // eslint-disable-next-line object-shorthand
+        page: page,
+        paged: 10,
+      };
+
       const loader = this.$loading.show();
-      this.$http.get(api)
+      this.$http.get(api, { params })
         .then((res) => {
           this.orders = res.data.data;
+          this.pagination = res.data.meta.pagination;
           loader.hide();
         });
     },
