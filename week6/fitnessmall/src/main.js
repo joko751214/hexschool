@@ -17,12 +17,18 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ValidationObserver, ValidationProvider, configure, extend, localize } from 'vee-validate';
 import zhTW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
+// import AOS from 'aos';
+// import 'aos/dist/aos.css';
 // 載入filter
 import currencyFilter from './filters/currency';
 // bus
 import './bus';
 import App from './App.vue';
 import router from './router';
+
+// scrollanimation, 參考影片: https://www.youtube.com/watch?v=NVgNUXsXn-s
+// 覺得aos不好用，所以選擇用這個
+import ScrollAnimation from './directives/scrollanimation';
 
 // 將jquery設為全域
 window.$ = jquery;
@@ -71,7 +77,12 @@ configure({
 // 加入驗證的中文內容
 localize('tw', zhTW);
 
+Vue.directive('scrollanimation', ScrollAnimation);
+
 new Vue({
+  created() {
+    // AOS.init();
+  },
   router,
   render: (h) => h(App),
 }).$mount('#app');

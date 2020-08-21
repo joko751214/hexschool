@@ -90,7 +90,6 @@ export default {
       const loader = this.$loading.show();
       this.$http.get(apiUrl, { params })
         .then((res) => {
-          console.log(res);
           this.products = res.data.data; // 取得產品列表
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           loader.hide();

@@ -145,15 +145,13 @@ export default {
       const loader = this.$loading.show();
       this.$http.get(url)
         .then((res) => {
-          console.log(res);
           this.carts = [...res.data.data];
           this.carts.forEach((item) => {
             this.totalPrice += item.product.price * item.quantity;
           });
           loader.hide();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
         });
     },
     /* eslint-disable no-param-reassign */
@@ -185,8 +183,7 @@ export default {
             'success',
           );
         })
-        .catch((err) => {
-          console.log('錯誤信息:', err);
+        .catch(() => {
         });
     },
   },

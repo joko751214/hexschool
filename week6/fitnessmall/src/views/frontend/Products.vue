@@ -69,11 +69,9 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`;
       this.$http.get(url, { params: { page } })
         .then((res) => {
-          console.log(res);
           this.products = res.data.data;
           loader.hide();
-        }).catch((err) => {
-          console.log(err);
+        }).catch(() => {
         });
     },
     addToCart(item) {

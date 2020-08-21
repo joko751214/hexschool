@@ -148,13 +148,11 @@ export default {
       const loader = this.$loading.show();
       this.$http.post(api, this.form)
         .then((res) => {
-          console.log(res);
           const { id } = res.data.data;
           loader.hide();
           this.$router.push(`/checkform/${id}`);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
         });
     },
     getCartData() {
@@ -165,15 +163,13 @@ export default {
       const loader = this.$loading.show();
       this.$http.get(url)
         .then((res) => {
-          console.log(res);
           this.carts = [...res.data.data];
           this.carts.forEach((item) => {
             this.totalPrice += item.product.price * item.quantity;
           });
           loader.hide();
         })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
         });
     },
   },

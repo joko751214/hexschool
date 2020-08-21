@@ -181,7 +181,6 @@ export default {
       this.$http.get(apiUrl)
         .then((res) => {
           this.coupons = res.data.data;
-          console.log(this.coupons);
           loader.hide();
         });
     },

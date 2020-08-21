@@ -109,7 +109,6 @@ export default {
       const loader = this.$loading.show();
       this.$http.get(api)
         .then((res) => {
-          console.log(res);
           const { data } = res.data;
           this.user = data.user;
           this.paid = data.paid;
@@ -120,8 +119,7 @@ export default {
           });
           loader.hide();
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
         });
     },
     setOrderPaid() {

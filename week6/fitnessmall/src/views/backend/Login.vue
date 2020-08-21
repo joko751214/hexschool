@@ -41,8 +41,7 @@ export default {
           // 跳轉畫面
           this.$router.push('admin/products');
           loader.hide();
-        }).catch((error) => {
-          console.log(error);
+        }).catch(() => {
         });
     },
   },

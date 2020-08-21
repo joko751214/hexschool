@@ -133,8 +133,7 @@ export default {
           this.status = false;
           $('#productModal').modal('hide');
           this.product = {};
-        }).catch((error) => {
-          console.log(error);
+        }).catch(() => {
         });
     },
     getProduct(id) {
@@ -174,8 +173,7 @@ export default {
       }).then((res) => {
         this.product.imageUrl.push(res.data.data.path);
         loader.hide();
-      }).catch((error) => {
-        console.log('error:', error);
+      }).catch(() => {
       });
     },
   },
