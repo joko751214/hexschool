@@ -1,0 +1,6 @@
+@import "~bootstrap/scss/functions";  // 官方的
+@import "./variables";  // 自己的
+@import "~bootstrap/scss/bootstrap";  // 官方的
+
+// 全部導入
+@import "~bootstrap";
