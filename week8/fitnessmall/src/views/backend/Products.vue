@@ -19,7 +19,7 @@
       <tbody>
           <tr v-for='product in products' :key='product.id'>
             <td width='100'>
-              <img :src="product.imageUrl[0]" class="img-fluid">
+              <img :src="product.imageUrl[0]" class="img-fluid" alt="美味的餐點">
             </td>
             <td>{{ product.category }}</td>
             <td>{{ product.title }}</td>
@@ -44,10 +44,9 @@
 
     <Pagination @emit-pages='getProducts' :pages='pagination'/>
 
-    <ProductModal :temp-product='tempProduct' :token='token'
-    ref='productModal' @update="getProducts"/>
+    <ProductModal :temp-product='tempProduct' ref='productModal' @update="getProducts"/>
 
-    <DeleteModal :temp-product='tempProduct' :token='token' @update='getProducts'/>
+    <DeleteModal :temp-product='tempProduct' @update='getProducts'/>
 
   </div>
 </template>
@@ -64,7 +63,6 @@ export default {
     DeleteModal,
     Pagination,
   },
-  props: ['token'],
   data() {
     return {
       products: [],
@@ -80,11 +78,12 @@ export default {
   methods: {
     getProducts(page = 1) {
       const apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/products`;
-      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+      this.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       const params = {
-        // eslint-disable-next-line object-shorthand
-        page: page,
+        page,
         paged: 10,
       };
       const loader = this.$loading.show();
@@ -93,6 +92,13 @@ export default {
           this.products = res.data.data; // 取得產品列表
           this.pagination = res.data.meta.pagination; // 取得分頁資訊
           loader.hide();
+        })
+        .catch((err) => {
+          this.$swal(
+            '伺服器狀況',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     openModal(status, item) {
@@ -131,7 +137,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

@@ -16,14 +16,12 @@
             <td>
               <ul class="list-unstyled">
                 <li v-for='(item, index) in order.products' :key=index>
-                  {{item.product.title}} 數量: {{item.quantity}} {{item.product.unit}}
+                  {{ item.product.title }} 數量: {{ item.quantity }} {{ item.product.unit }}
                 </li>
               </ul>
             </td>
             <td>{{ order.payment }}</td>
             <td>{{ order.amount }}</td>
-            <!-- <td>{{ order.user. }}</td> -->
-            <!-- <td>{{ order.paid }}</td> -->
             <td>
               <div class="custom-control custom-switch">
                 <input type="checkbox"
@@ -49,7 +47,6 @@
 import Pagination from '@/components/backend/Pagination.vue';
 
 export default {
-  props: ['token'],
   components: {
     Pagination,
   },
@@ -62,11 +59,12 @@ export default {
   methods: {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders`;
-      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+      this.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       const params = {
-        // eslint-disable-next-line object-shorthand
-        page: page,
+        page,
         paged: 10,
       };
 
@@ -76,11 +74,17 @@ export default {
           this.orders = res.data.data;
           this.pagination = res.data.meta.pagination;
           loader.hide();
+        })
+        .catch((err) => {
+          this.$swal(
+            '或取訂單失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     setOrderPaid(item) {
       let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders/${item.id}/paid`;
-      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
 
       if (!item.paid) {
         api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/orders/${item.id}/unpaid`;
@@ -92,6 +96,13 @@ export default {
           loader.hide();
           // 原先將getOrders放在外面，導致畫面沒有同步處理
           this.getOrders();
+        })
+        .catch((err) => {
+          this.$swal(
+            '付款狀況',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
   },
@@ -100,7 +111,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

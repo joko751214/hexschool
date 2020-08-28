@@ -131,7 +131,6 @@
 /* global $ */
 
 export default {
-  props: ['token'],
   data() {
     return {
       coupons: {},
@@ -159,14 +158,14 @@ export default {
           $('#couponModal').modal('show');
           break;
         case 'edit': {
-          this.tempCoupon = Object.assign({}, item);
+          this.tempCoupon = { ...item };
           const deadline = this.tempCoupon.deadline.datetime.split(' ');
           [this.due_date, this.due_time] = deadline;
           $('#couponModal').modal('show');
           break;
         }
         case 'delete':
-          this.tempCoupon = Object.assign({}, item);
+          this.tempCoupon = { ...item };
           $('#deleteModal').modal('show');
           break;
         default:
@@ -175,13 +174,22 @@ export default {
     },
     getCoupons() {
       const apiUrl = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/coupons`;
-      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+      this.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       const loader = this.$loading.show();
       this.$http.get(apiUrl)
         .then((res) => {
           this.coupons = res.data.data;
           loader.hide();
+        })
+        .catch((err) => {
+          this.$swal(
+            '獲取優惠券失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     updateCoupon(id) {
@@ -200,6 +208,13 @@ export default {
           this.mode = false;
           $('#couponModal').modal('hide');
           this.getCoupons();
+        })
+        .catch((err) => {
+          this.$swal(
+            '更新優惠券失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     deleteCoupon(id) {
@@ -211,6 +226,13 @@ export default {
           this.mode = false;
           $('#deleteModal').modal('hide');
           this.getCoupons();
+        })
+        .catch((err) => {
+          this.$swal(
+            '刪除優惠券失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
   },
@@ -219,7 +241,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

@@ -62,6 +62,10 @@ const routes = [
     path: '/login',
     component: () => import('../views//backend/Login.vue'),
   },
+  {
+    path: '*',
+    redirect: '/',
+  },
 ];
 
 const router = new VueRouter({

@@ -1,12 +1,92 @@
 <template>
-  <footer class="container-fluid bg-primary">
-    <div class="d-flex align-items-center justify-content-around text-white py-2">
-      <p>無商業用途，僅供學習使用</p>
-      <router-link to="/admin/products"
-                   class="nav-link text-light">
-        <i class="fas fa-user-cog"></i>
-        登入
-      </router-link>
+  <footer class="footer-navbar bg-primary">
+    <!-- <div class="container-fluid d-flex justify-content-between text-white">
+      <div class="d-flex justify-content-between flex-column text-center col-4">
+        <ul class="navbar-nav flex-row justify-content-around py-2">
+          <li>
+            <router-link to="/products">
+              <span class="sideline">商品列表</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/about">
+              <span class="sideline">關於我們</span>
+            </router-link>
+          </li>
+        </ul>
+        <p class="sideline">Copyright © 2020 Jin</p>
+      </div>
+      <div class="logo d-flex align-items-center col-4">
+        <router-link to="/">
+          <span class="title">FITNESS MALL</span>
+        </router-link>
+      </div>
+      <div class="icon-box text-center col-4">
+        <ul class="py-2 d-flex justify-content-around list-unstyled">
+          <li>
+            <a href="#">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fab fa-facebook-square"></i>
+            </a>
+          </li>
+        </ul>
+        <p class="sideline">無商業用途，僅供學習使用</p>
+      </div>
+    </div> -->
+     <div class="container">
+      <div class="text-white pt-3">
+        <div class="row">
+          <div class="col-6">
+            <div class="d-flex justify-content-center">
+              <ul class="d-flex list-unstyled mb-0">
+                <li class="nav-item">
+                  <router-link to="/products"
+                              class="nav-link text-white">
+                    商品列表
+                  </router-link>
+                </li>
+                <li>
+                  <router-link to="/about"
+                              class="nav-link text-white">
+                    關於我們
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="icon-box text-center col-6">
+            <ul class="d-flex justify-content-center list-unstyled">
+              <li class="px-2">
+                <a href="#">
+                  <i class="fab fa-instagram"></i>
+                </a>
+              </li>
+              <li class="px-2">
+                <a href="#">
+                  <i class="fab fa-github"></i>
+                </a>
+              </li>
+              <li class="px-2">
+                <a href="#">
+                  <i class="fab fa-facebook-square"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class='row justify-content-center'>
+          <p>無商業用途，僅供學習使用</p>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
@@ -18,5 +98,30 @@ export default {
 </script>
 
 <style>
+
+.sideline {
+  color: white;
+}
+.logo .sideline {
+  font-size: 32px;
+}
+
+.icon-box i{
+  font-size: 2rem;
+  color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 20px;
+  }
+  .sideline {
+    font-size: 15px;
+  }
+}
 
 </style>

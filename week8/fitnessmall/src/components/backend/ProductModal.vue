@@ -103,7 +103,7 @@
 /* global $ */
 
 export default {
-  props: ['token', 'tempProduct'],
+  props: ['tempProduct'],
   data() {
     return {
       product: {
@@ -120,7 +120,8 @@ export default {
       let api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product`;
       let httpMethod = 'post';
 
-      this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+      this.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       if (this.product.id) {
         api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/ec/product/${this.product.id}`;

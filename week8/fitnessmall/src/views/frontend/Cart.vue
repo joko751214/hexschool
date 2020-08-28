@@ -1,15 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container" style="margin-top: 8rem;">
     <div class="row mt-5 mb-5 justify-content-center">
       <div class="col-md-8">
         <div class="row justify-content-between px-3 mb-3">
           <h3>已選擇商品</h3>
           <div class="text-right">
             <button type="button" class="btn btn-outline-danger border-0" @click="deleteCartList()">
-              <i class="fas fa-times">
-                <b-spinner small type='grow' v-if='status'></b-spinner>
-              </i>
-              <!-- <font-awesome-icon :icon="['far', 'trash-alt']"/>刪除所有商品 -->
+              <b-spinner small type='grow' v-if='status'></b-spinner>
+              <i class="fas fa-times"></i>
             </button>
           </div>
         </div>
@@ -27,29 +25,29 @@
           <tbody>
             <tr v-for="cart in carts" :key="cart.product.id">
               <td width='100'>
-                <img :src="cart.product.imageUrl[0]" class="img-fluid">
+                <img :src="cart.product.imageUrl[0]" class="img-fluid" alt="美味的餐點">
               </td>
-              <td class="align-middle">{{cart.product.title}}</td>
+              <td class="align-middle">{{ cart.product.title }}</td>
               <td class="align-middle">
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-primary"
-                    @click="updateCartData(cart, '+')">+</button>
-                  </div>
-                  <input type="text" class="form-control text-center" :value="cart.quantity">
                   <div class="input-group-append">
                     <button class="btn btn-outline-primary"
                     @click="updateCartData(cart, '-')" :disabled="cart.quantity === 1">-</button>
                   </div>
+                  <input type="text" class="form-control text-center" :value="cart.quantity">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-outline-primary"
+                    @click="updateCartData(cart, '+')">+</button>
+                  </div>
                 </div>
               </td>
-              <td class="align-middle">{{cart.product.unit}}</td>
-              <td class="align-middle">{{cart.product.price * cart.quantity | currency}}</td>
+              <td class="align-middle">{{ cart.product.unit }}</td>
+              <td class="align-middle">{{ cart.product.price * cart.quantity | currency }}</td>
               <td class="align-middle">
                 <button type="button" class="btn btn-outline-danger btn-sm"
                 @click="deleteCartList(cart.product)">
                   <b-spinner small type='grow' v-if='statusId === cart.product.id'></b-spinner>
-                  <font-awesome-icon :icon="['far', 'trash-alt']"/>
+                  <i class="fas fa-trash-alt"></i>
                 </button>
               </td>
             </tr>
@@ -58,36 +56,19 @@
             <tr>
               <td colspan="3"></td>
               <td colspan="3" class="text-right">
-                <h5>總計: {{totalPrice | currency}}</h5>
+                <h5>總計: {{ totalPrice | currency }}</h5>
               </td>
-              <!-- <td></td> -->
             </tr>
           </tfoot>
         </table>
-        <router-link to='/order' class="btn btn-primary btn-block">
-          <font-awesome-icon icon="shopping-cart"/> 結帳
-        </router-link>
-      </div>
-      <!-- <div class="col-md-4">
-        <div class="border p-4 mb-4">
-          <h4 class="font-weight-bold mb-4">Order Detail</h4>
-          <table class="table text-muted border-bottom">
-            <tbody>
-              <tr>
-                <th scope="row" class="border-0 px-0 pt-4 font-weight-normal">小計</th>
-                <td class="text-right border-0 px-0 pt-4">{{totalPrice | currency}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="d-flex justify-content-between mt-4">
-            <p class="mb-0 h4 font-weight-bold">總計</p>
-            <p class="mb-0 h4 font-weight-bold">{{totalPrice | currency}}</p>
-          </div>
-          <router-link to='/checkform' class="btn btn-primary btn-block">
-            <font-awesome-icon icon="shopping-cart"/>結帳
-          </router-link>
+        <div class='text-right'>
+          <button class="btn btn-primary" style='width: 120px;height: 50px'>
+            <router-link to='/order'>
+              <i class="fas fa-shopping-cart text-white"> 結帳</i>
+            </router-link>
+          </button>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -120,6 +101,13 @@ export default {
               '可以再看看其他的',
               'success',
             );
+          })
+          .catch((err) => {
+            this.$swal(
+              '商品無法刪除',
+              err.response.data.errors[0],
+              'error',
+            );
           });
       } else {
         const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`;
@@ -133,6 +121,13 @@ export default {
               '商品清空',
               '目前商品已全數清空',
               'success',
+            );
+          })
+          .catch((err) => {
+            this.$swal(
+              '商品無法刪除',
+              err.response.data.errors[0],
+              'error',
             );
           });
       }
@@ -151,11 +146,16 @@ export default {
           });
           loader.hide();
         })
-        .catch(() => {
+        .catch((err) => {
+          this.$swal(
+            '獲取購物車清單失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
-    /* eslint-disable no-param-reassign */
-    updateCartData(item, status) {
+    updateCartData(items, status) {
+      const item = items;
       switch (status) {
         case '+':
           item.quantity += 1;
@@ -183,7 +183,12 @@ export default {
             'success',
           );
         })
-        .catch(() => {
+        .catch((err) => {
+          this.$swal(
+            '產品更新失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
   },
@@ -192,7 +197,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

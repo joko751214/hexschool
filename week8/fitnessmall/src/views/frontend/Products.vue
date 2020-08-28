@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-5">
-    <div class="row product" v-if="products.length > 0">
-      <div class="col-md-4">
+  <div class="container" style="margin-top: 7rem;margin-bottom: 8rem;" v-if="products.length > 0">
+    <div class="row product">
+      <div class="col-md-3">
         <ul class="list-group sticky-top rounded-0">
           <a href="#"
               class="list-group-item list-group-item-action"
@@ -19,19 +19,31 @@
           </a>
         </ul>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-9">
         <div class="row">
-          <div class="col-md-6" v-for="item in filterCategories" :key="item.id">
+          <div class="col-md-4" v-for="item in filterCategories" :key="item.id">
             <div class="card border-0 mb-4 position-relative position-relative">
-              <img :src="item.imageUrl[0]" class="card-img-top rounded-0" alt="...">
+              <router-link :to="`/product/${ item.id }`">
+                <div style="
+                    height: 200px;
+                    background-size: cover;
+                    background-position: center;
+                  "
+                    class="rounded-0"
+                    :style="{ backgroundImage: `url(${ item.imageUrl[0] })` }">
+                  </div>
+              </router-link>
               <div class="card-body p-0">
-                <h4 class="mb-0 mt-3">
-                  <router-link :to="`/product/${item.id}`">{{item.title}}</router-link>
-                </h4>
-                <p class="card-text mb-0 price">{{item.price | currency}}
-                  <span class="text-muted "><del>{{item.origin_price | currency}}</del></span>
+                <router-link :to="`/product/${ item.id }`">
+                  <h4 class="mt-3 mb-2">
+                    {{item.title}}
+                  </h4>
+                </router-link>
+                <p class="card-text mb-0 price">{{ item.price | currency }}
+                  <span class="text-muted"><del>{{ item.origin_price | currency }}</del></span>
                 </p>
-                <button class="btn btn-secondary mt-2 btn-block"
+                <p class="text-muted" style="font-size: 8px;">{{ item.content }}</p>
+                <button class="btn btn-primary mt-2 btn-block text-white"
                 @click="addToCart(item)">
                   <b-spinner small type='grow' v-if='statusId === item.id'></b-spinner>
                   加入購物車
@@ -70,8 +82,17 @@ export default {
       this.$http.get(url, { params: { page } })
         .then((res) => {
           this.products = res.data.data;
+          const { categoryName } = this.$route.params;
+          if (categoryName) {
+            this.filterCategory = categoryName;
+          }
           loader.hide();
-        }).catch(() => {
+        }).catch((err) => {
+          this.$swal(
+            '獲取清單列表失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     addToCart(item) {
@@ -123,15 +144,14 @@ export default {
 </script>
 
 <style>
-.price {
-  color: red;
-}
 .cart {
   position: fixed;
   right: 1%;
-  bottom: 10%;
+  bottom: 30%;
   border-radius: 50%;
-  /* background-color: #6b5139af; */
   cursor: pointer;
+}
+.price {
+  color: red;
 }
 </style>

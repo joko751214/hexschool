@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-2">
+  <div class="container" style="margin-top: 4rem;">
     <div class="row justify-content-center">
-      <div class="col-md-6 bg-white p-3">
+      <div class="col-md-6 bg-white p-3 mt-3">
         <div class="mb-2">
           <h4>客戶資訊</h4>
         </div>
@@ -49,9 +49,9 @@
                 </ValidationProvider>
               </div>
               <div class="form-group">
-                <label>付款方式</label>
+                <label>選擇付款方式</label>
                 <select v-model="form.payment" class="form-control" required>
-                  <option value="" disabled selected="selected">請選擇付款方式</option>
+                  <option value="" disabled selected="selected">選擇付款方式</option>
                   <option value="WebATM">WebATM</option>
                   <option value="ATM">ATM</option>
                   <option value="Barcode">Barcode</option>
@@ -77,14 +77,14 @@
           </ValidationObserver>
         </div>
       </div>
-      <div class="col-md-4 mb-5">
+      <div class="col-md-4 mb-5 p-3 mt-3">
         <div class="border p-5 mx-2 mb-4 order-card">
           <h4 class="mb-4 text-brown font-weight-bold">訂單明細</h4>
           <div v-for="item in carts"
                 :key="item.product.id + 1">
             <div class="d-flex mb-2">
               <img :src="item.product.imageUrl[0]"
-                    alt=""
+                    alt="美味的餐點"
                     class="mr-2"
                     style="width: 48px; height: 48px; object-fit: cover">
               <div class="w-100">
@@ -152,7 +152,12 @@ export default {
           loader.hide();
           this.$router.push(`/checkform/${id}`);
         })
-        .catch(() => {
+        .catch((err) => {
+          this.$swal(
+            '訂單創建失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     getCartData() {
@@ -169,7 +174,12 @@ export default {
           });
           loader.hide();
         })
-        .catch(() => {
+        .catch((err) => {
+          this.$swal(
+            '獲取購物車清單失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
   },
@@ -178,7 +188,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

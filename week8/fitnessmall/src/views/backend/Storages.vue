@@ -15,7 +15,7 @@
         <tr v-for="(item, index) in storages" :key="index">
           <td style="vertical-align: middle">#{{ index+1 }}</td>
           <td>
-            <img class="img-fluid" width='100px' :src="item.path" alt="">
+            <img class="img-fluid" width='100px' :src="item.path" alt="美味的餐點">
           </td>
           <td style="vertical-align: middle">
             <div class="btn-group">
@@ -49,7 +49,7 @@
                 class="form-control mt-3"
                 ref='file'
                 @change="uploadFile">
-                <img :src="filePath" class='img-fluid mt-3' alt="">
+                <img :src="filePath" class='img-fluid mt-3' alt="美味的餐點">
               </div>
             </form>
           </div>
@@ -95,10 +95,8 @@
 </template>
 
 <script>
+/* global $ */
 export default {
-  /* global $ */
-
-  props: ['token'],
   data() {
     return {
       storages: [],
@@ -126,13 +124,22 @@ export default {
     },
     getStorages() {
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/admin/storage`;
-      this.$http.defaults.headers.Authorization = `Bearer ${this.token}`;
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+      this.$http.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       const loader = this.$loading.show();
       this.$http.get(api)
         .then((res) => {
           this.storages = res.data.data;
           loader.hide();
+        })
+        .catch((err) => {
+          this.$swal(
+            '伺服器狀況',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     deleteStorage(id) {
@@ -147,7 +154,6 @@ export default {
         });
     },
     uploadFile() {
-      // eslint-disable-next-line prefer-destructuring
       const uploadFile = this.$refs.file.files[0];
       const formData = new FormData();
       formData.append('file', uploadFile);
@@ -166,6 +172,13 @@ export default {
           this.tempStorage = res.data.data;
           loader.hide();
           this.status = true;
+        })
+        .catch((err) => {
+          this.$swal(
+            '伺服器狀況',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     confirm() {
@@ -177,6 +190,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

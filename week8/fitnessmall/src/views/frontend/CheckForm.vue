@@ -8,7 +8,7 @@
                 :key="index">
             <div class="d-flex mb-2">
               <img :src="item.product.imageUrl[0]"
-                    alt=""
+                    alt="美味的餐點"
                     class="mr-2"
                     style="width: 48px; height: 48px; object-fit: cover">
               <div class="w-100">
@@ -62,7 +62,7 @@
               <tr>
                 <th scope="row" class="border-0 px-0 pt-3">付款狀態</th>
                 <td class="text-right border-0 px-0 pt-3" :class="paid ? 'text-success' : ''">
-                  {{ paid ? '付款成功' : '尚未付款'}}
+                  {{ paid ? '付款成功' : '尚未付款' }}
                 </td>
               </tr>
             </tbody>
@@ -119,7 +119,12 @@ export default {
           });
           loader.hide();
         })
-        .catch(() => {
+        .catch((err) => {
+          this.$swal(
+            '獲取訂單失敗',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     setOrderPaid() {
@@ -129,6 +134,13 @@ export default {
         .then(() => {
           loader.hide();
           this.getOrder();
+        })
+        .catch((err) => {
+          this.$swal(
+            '付款狀況',
+            err.response.data.errors[0],
+            'error',
+          );
         });
     },
     backHome() {
@@ -140,7 +152,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

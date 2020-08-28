@@ -12,13 +12,12 @@ import VueSwal from 'vue-swal';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-// eslint-disable-next-line object-curly-newline
-import { ValidationObserver, ValidationProvider, configure, extend, localize } from 'vee-validate';
+import {
+  ValidationObserver, ValidationProvider, configure, extend, localize,
+} from 'vee-validate';
 import zhTW from 'vee-validate/dist/locale/zh_TW.json';
 import * as rules from 'vee-validate/dist/rules';
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
+
 // 載入filter
 import currencyFilter from './filters/currency';
 // bus
@@ -36,7 +35,6 @@ window.$ = jquery;
 Vue.config.productionTip = false;
 
 library.add(fas, far);
-Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.filter('currency', currencyFilter);
 
@@ -70,7 +68,6 @@ configure({
     valid: 'is-valid',
     invalid: 'is-invalid',
     dirty: ['is-dirty', 'is-dirty'], // multiple classes per flag!
-    // ...
   },
 });
 
@@ -80,9 +77,6 @@ localize('tw', zhTW);
 Vue.directive('scrollanimation', ScrollAnimation);
 
 new Vue({
-  created() {
-    // AOS.init();
-  },
   router,
   render: (h) => h(App),
 }).$mount('#app');
