@@ -76,13 +76,14 @@ export default {
     };
   },
   methods: {
-    getProducts(page = 1) {
+    getProducts() {
       const loader = this.$loading.show();
       const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/products`;
-      this.$http.get(url, { params: { page } })
+      this.$http.get(url)
         .then((res) => {
           this.products = res.data.data;
           const { categoryName } = this.$route.params;
+          console.log(this.$route);
           if (categoryName) {
             this.filterCategory = categoryName;
           }

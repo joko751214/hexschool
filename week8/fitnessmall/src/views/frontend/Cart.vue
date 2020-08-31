@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="margin-top: 8rem;">
+  <div class="container" style="margin-top: 8rem;" v-if='carts.length'>
     <div class="row mt-5 mb-5 justify-content-center">
       <div class="col-md-8">
         <div class="row justify-content-between px-3 mb-3">
@@ -62,19 +62,25 @@
           </tfoot>
         </table>
         <div class='text-right'>
-          <button class="btn btn-primary" style='width: 120px;height: 50px'>
-            <router-link to='/order'>
+          <router-link to='/order'>
+            <button class="btn btn-primary" style='width: 120px;height: 50px'>
               <i class="fas fa-shopping-cart text-white"> 結帳</i>
-            </router-link>
-          </button>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
+    <ProductsCategory/>
   </div>
 </template>
 
 <script>
+import ProductsCategory from '@/components/frontend/ProductsCategory.vue';
+
 export default {
+  components: {
+    ProductsCategory,
+  },
   data() {
     return {
       carts: [],

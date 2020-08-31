@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HomepageSidebar/>
     <Header/>
     <div class="container">
       <section id="section_about">
@@ -13,7 +14,7 @@
               <img src="https://images.unsplash.com/photo-1499969942143-ad2a66bc72dc?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" alt="美味的餐點"/>
               <h3>早餐</h3>
               <p>
-              每天都拿不定主意早餐要吃什麼嗎? <br/>快來FITNESMALL挑選美味可口的
+              每天都拿不定主意早餐要吃什麼嗎? <br/>快來FITNESMALL挑選美味可口的早餐
               </p>
             </div>
           </div>
@@ -70,15 +71,32 @@
         <button class="btn btn-outline-secondary">訂閱故事</button>
       </div>
     </section>
+    <Footer/>
   </div>
 </template>
 
 <script>
+/* global $ */
 import Header from '@/components/frontend/Header.vue';
+import HomepageSidebar from '@/components/frontend/HomepageSidebar.vue';
+import Footer from '@/components/frontend/Footer.vue';
+
+// 視窗滑動時執行的事件
+$(window).scroll(() => {
+  if ($(window).scrollTop() > 0) {
+    $('.homebar').removeClass('top');
+    $('.homebar').addClass('bg-primary');
+  } else {
+    $('.homebar').addClass('top');
+    $('.homebar').removeClass('bg-primary');
+  }
+});
 
 export default {
   components: {
+    HomepageSidebar,
     Header,
+    Footer,
   },
 };
 </script>

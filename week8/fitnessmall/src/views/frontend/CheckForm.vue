@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5 mb-5">
+  <div class="container" style="margin-top: 8rem;margin-bottom: 4rem;">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="border px-5 py-4 mx-2 mb-4 order-card">

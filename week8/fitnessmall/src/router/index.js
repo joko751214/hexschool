@@ -7,14 +7,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
+    component: () => import('../views/frontend/Homepage.vue'),
+  },
+  {
+    path: '',
     name: 'Home',
     component: Home,
     children: [
       {
-        path: '',
-        component: () => import('../views/frontend/Homepage.vue'),
-      },
-      {
+        name: 'products',
         path: 'products',
         component: () => import('../views/frontend/Products.vue'),
       },

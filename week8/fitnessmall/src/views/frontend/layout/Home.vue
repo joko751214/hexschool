@@ -30,9 +30,6 @@ export default {
 * {
   font-family: 微軟正黑體;
 }
-html, body {
-  height: 100%;
-}
 
 h1, h2, h3, h4, h5, h6.h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: bold;
