@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="margin-top: 8rem;margin-bottom: 4rem;">
+  <div class="container" style="margin-top: 8rem;margin-bottom: 4rem;" v-if='products.length'>
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="border px-5 py-4 mx-2 mb-4 order-card">
@@ -78,7 +78,7 @@
               <h2 class="my-0">完成訂單</h2>
               <div class='text-right'>
                 <button type="button"
-                class='btn btn-outline-secondary'
+                class='btn btn-outline-primary'
                 @click.prevent="backHome"
                 >回到首頁</button>
               </div>

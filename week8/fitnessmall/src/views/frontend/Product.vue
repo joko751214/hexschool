@@ -1,22 +1,22 @@
 <template>
   <div class="container"
-  style="margin-top: 7rem;margin-bottom: 4rem;"
-  v-if="product.imageUrl[0]">
-    <div class="row align-items-center">
-      <div class="col-md-7">
+  style="margin-top: 7rem;margin-bottom: 5rem;"
+  v-if="product.imageUrl">
+    <div class="row align-items-center justify-content-center mb-4">
+      <div class="col-lg-5">
         <div style="
               height: 400px;
               background-size: cover;
               background-position: center;"
              class="rounded-0"
-             :style="{ backgroundImage: `url(${ product.imageUrl[0] })` }">
+             :style="{ backgroundImage: `url(${ product.imageUrl })` }">
         </div>
+      </div>
+      <div class="col-lg-5 mt-3">
+        <h2 class="font-weight-bold h1 mb-5">{{ product.title }}</h2>
         <p class="mt-3">{{ product.content }}</p>
         <p class="text-muted"
         style="font-size: 8px;">{{ product.description }}</p>
-      </div>
-      <div class="col-md-5">
-        <h2 class="font-weight-bold h1 mb-1">{{ product.title }}</h2>
         <p class="mb-0 text-muted text-right">
           <del>{{ product.origin_price | currency }}</del>
         </p>
@@ -63,6 +63,7 @@ export default {
       const loader = this.$loading.show();
       this.$http.get(api)
         .then((res) => {
+          console.log(res);
           this.product = res.data.data;
           loader.hide();
         })

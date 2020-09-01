@@ -1,7 +1,7 @@
 <template>
   <div class="container" style="margin-top: 7rem;margin-bottom: 8rem;" v-if="products.length > 0">
     <div class="row product">
-      <div class="col-md-3">
+      <div class="col-lg-2 col-md-3 mb-3">
         <ul class="list-group sticky-top rounded-0">
           <a href="#"
               class="list-group-item list-group-item-action"
@@ -19,9 +19,9 @@
           </a>
         </ul>
       </div>
-      <div class="col-md-9">
+      <div class="col-lg-10 col-md-9">
         <div class="row">
-          <div class="col-md-4" v-for="item in filterCategories" :key="item.id">
+          <div class="col-lg-4 col-sm-6 mb-3" v-for="item in filterCategories" :key="item.id">
             <div class="card border-0 mb-4 position-relative position-relative">
               <router-link :to="`/product/${ item.id }`">
                 <div style="

@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-4" v-for="item in relatedProduct" :key="item.id">
+    <div class="col-md-4" v-for="item in relatedProducts" :key="item.id">
       <div class="card border-0 mb-4 position-relative position-relative">
         <router-link :to="`/product/${ item.id }`">
           <div style="
@@ -35,6 +35,7 @@ export default {
     return {
       products: [],
       relatedProduct: [],
+      statusId: '',
     };
   },
   methods: {
@@ -44,9 +45,7 @@ export default {
       this.$http.get(url, { params: { page } })
         .then((res) => {
           this.products = res.data.data;
-          this.relatedProduct = this.products.filter(
-            (item) => item.id !== this.product.id && item.category === this.product.category,
-          );
+
           loader.hide();
         }).catch((err) => {
           this.$swal(
@@ -55,6 +54,42 @@ export default {
             'error',
           );
         });
+    },
+    addToCart(item) {
+      this.statusId = item.id;
+      const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping`;
+
+      const parm = {
+        product: item.id,
+        quantity: 1,
+      };
+
+      this.$http.post(url, parm)
+        .then(() => {
+          this.$bus.$emit('quantity', parm.quantity);
+          this.statusId = '';
+          this.$swal(
+            '產品添加成功',
+            '請至購物車結帳',
+            'success',
+          );
+        })
+        .catch((err) => {
+          this.statusId = '';
+          this.$swal(
+            '商品重複',
+            err.response.data.errors[0],
+            'error',
+          );
+        });
+    },
+  },
+  computed: {
+    relatedProducts() {
+      const data = this.products.filter(
+        (item) => item.id !== this.product.id && item.category === this.product.category,
+      );
+      return data;
     },
   },
   created() {
