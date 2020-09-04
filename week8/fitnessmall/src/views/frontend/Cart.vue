@@ -1,73 +1,88 @@
 <template>
-  <div class="container" style="margin-top: 8rem;" v-if='carts.length'>
-    <div class="row mt-5 mb-5 justify-content-center">
-      <div class="col-md-8">
-        <div class="row justify-content-between px-3 mb-3">
+  <div class="container" style="margin-top: 8rem;">
+    <div class="row mt-5 mb-5 justify-content-center" v-if='carts.length'>
+      <div class="col-md-6">
+        <div class="row justify-content-between px-3 mb-5">
           <h3>已選擇商品</h3>
           <div class="text-right">
-            <button type="button" class="btn btn-outline-danger border-0" @click="deleteCartList()">
-              <b-spinner small type='grow' v-if='status'></b-spinner>
+            <a href="#" class="h4 text-dark" @click.prevent="deleteCartList()">
               <i class="fas fa-times"></i>
-            </button>
+            </a>
           </div>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>名稱</th>
-              <th width="140px">數量</th>
-              <th>單位</th>
-              <th>價格</th>
-              <th>刪除</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="cart in carts" :key="cart.product.id">
-              <td width='100'>
-                <img :src="cart.product.imageUrl[0]" class="img-fluid" alt="美味的餐點">
-              </td>
-              <td class="align-middle">{{ cart.product.title }}</td>
-              <td class="align-middle">
-                <div class="input-group">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-primary"
-                    @click="updateCartData(cart, '-')" :disabled="cart.quantity === 1">-</button>
-                  </div>
-                  <input type="text" class="form-control text-center" :value="cart.quantity">
-                  <div class="input-group-prepend">
-                    <button class="btn btn-outline-primary"
-                    @click="updateCartData(cart, '+')">+</button>
-                  </div>
+        <div class='d-flex mt-4 bg-light' v-for="cart in carts" :key="cart.product.id">
+          <div class='cartImage'
+          :style="{ backgroundImage: `url(${ cart.product.imageUrl[0] })`}"></div>
+          <div class="w-100 p-3 position-relative">
+            <a href="#"
+                @click.prevent="deleteCartList(cart.product)"
+                class="position-absolute  text-dark"
+                style="top: 16px; right: 16px;">
+              <i class="fas fa-times"></i>
+            </a>
+            <p class="mb-0 font-weight-bold">
+              {{ cart.product.title }}
+            </p>
+            <p class="mb-1 text-muted"
+                style="font-size: 14px;">
+              {{ cart.product.content }}
+            </p>
+            <div class="d-flex justify-content-between align-items-center w-100 mt-3">
+              <div class="input-group w-50 align-items-center">
+                <div class="input-group-append pr-1">
+                  <button class="btn btn-outline-primary btn-sm border-0"
+                      @click.prevent="updateCartData(cart, '-')" :disabled="cart.quantity === 1">
+                    <i class="fas fa-minus"></i>
+                  </button>
                 </div>
-              </td>
-              <td class="align-middle">{{ cart.product.unit }}</td>
-              <td class="align-middle">{{ cart.product.price * cart.quantity | currency }}</td>
-              <td class="align-middle">
-                <button type="button" class="btn btn-outline-danger btn-sm"
-                @click="deleteCartList(cart.product)">
-                  <b-spinner small type='grow' v-if='statusId === cart.product.id'></b-spinner>
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="3"></td>
-              <td colspan="3" class="text-right">
-                <h5>總計: {{ totalPrice | currency }}</h5>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-        <div class='text-right'>
-          <router-link to='/order'>
-            <button class="btn btn-primary" style='width: 120px;height: 50px'>
-              <i class="fas fa-shopping-cart text-white"> 結帳</i>
-            </button>
+                <input  type="number"
+                        class="form-control border-0
+                          text-center my-auto shadow-none bg-light px-0"
+                        :value="cart.quantity"
+                        disabled />
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-primary btn-sm border-0"
+                          @click.prevent="updateCartData(cart, '+')">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+              <p class="mb-0 ml-auto info-text">
+                {{ cart.product.price | currency }}/{{ cart.product.unit }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-left: 124px;">
+          <div class="d-flex justify-content-between mt-4">
+            <p class="mb-0 h4 font-weight-bold">總計</p>
+            <p class="mb-0 h4 font-weight-bold">
+              {{ totalPrice | currency }}
+            </p>
+          </div>
+        </div>
+        <div class="d-flex mt-4 justify-content-between
+              align-items-md-center align-items-end w-100">
+          <router-link to="/products"
+                        class="text-dark mt-5 h5">
+            <i class="fas fa-chevron-left mr-1"></i>
+            繼續購物
+          </router-link>
+          <router-link to="/order"
+                        class="btn btn-primary mt-5 rounded-0">
+            <i class="fas fa-shopping-cart text-white"> 結帳</i>
           </router-link>
         </div>
+      </div>
+    </div>
+    <div style='margin-bottom: 103px;margin-top: 200px;' v-else>
+      <div class="d-flex justify-content-center my-7">
+        <h4 class="mb-3 warning-text">目前沒有商品，快去逛逛</h4>
+        <router-link to="/products"
+                      class="text-dark mt-5 mt-3 h5">
+          <i class="fas fa-chevron-left mr-2"></i>
+          查看商品
+        </router-link>
       </div>
     </div>
     <ProductsCategory/>
@@ -98,10 +113,12 @@ export default {
         };
 
         this.statusId = item.id;
+        const loader = this.$loading.show();
         this.$http.delete(url, parm)
           .then(() => {
             this.getCartData();
             this.statusId = '';
+            loader.hide();
             this.$swal(
               '商品刪除',
               '可以再看看其他的',
@@ -118,11 +135,11 @@ export default {
       } else {
         const url = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/shopping/all/product`;
 
-        this.status = true;
+        const loader = this.$loading.show();
         this.$http.delete(url)
           .then(() => {
             this.getCartData();
-            this.status = false;
+            loader.hide();
             this.$swal(
               '商品清空',
               '目前商品已全數清空',
@@ -180,9 +197,11 @@ export default {
         quantity: item.quantity,
       };
 
+      const loader = this.$loading.show();
       this.$http.patch(url, parm)
         .then(() => {
           this.getCartData();
+          loader.hide();
           this.$swal(
             '產品更新成功',
             '請至購物車結帳',
@@ -203,3 +222,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.cartImage {
+  width: 130px;
+  background-size: cover;
+  background-position: center;
+}
+</style>

@@ -39,7 +39,7 @@
     </div>
     <hr>
     <h5 class="font-weight-bold mt-4">相關商品</h5>
-    <RelatedProduct :product='product'/>
+    <RelatedProduct :product='product' @update="getProduct"/>
   </div>
 </template>
 
@@ -57,13 +57,13 @@ export default {
     };
   },
   methods: {
-    getProduct(id) {
+    getProduct() {
+      const { id } = this.$route.params;
       const api = `${process.env.VUE_APP_APIPATH}/${process.env.VUE_APP_UUID}/ec/product/${id}`;
 
       const loader = this.$loading.show();
       this.$http.get(api)
         .then((res) => {
-          console.log(res);
           this.product = res.data.data;
           loader.hide();
         })
@@ -83,8 +83,10 @@ export default {
         quantity: num,
       };
 
+      const loader = this.$loading.show();
       this.$http.post(url, parm)
         .then(() => {
+          loader.hide();
           this.$swal(
             '產品添加成功',
             '請至購物車結帳',
@@ -92,6 +94,7 @@ export default {
           );
         })
         .catch((err) => {
+          loader.hide();
           this.$swal(
             '商品重複',
             err.response.data.errors[0],

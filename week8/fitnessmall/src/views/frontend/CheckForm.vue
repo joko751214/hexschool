@@ -1,9 +1,9 @@
 <template>
   <div class="container" style="margin-top: 8rem;margin-bottom: 4rem;" v-if='products.length'>
     <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="border px-5 py-4 mx-2 mb-4 order-card">
-          <h4 class="mb-4 text-brown font-weight-bold">訂單資料</h4>
+      <div class="col-lg-6">
+        <div class="border px-4 py-4 mx-2 mb-4">
+          <h4 class="mb-4 font-weight-bold">訂單資料</h4>
           <div v-for="(item, index) in products"
                 :key="index">
             <div class="d-flex mb-2">
@@ -28,40 +28,40 @@
             <tbody>
               <tr class="mt-3">
                 <th scope="row"
-                    class="border-0 px-0 pt-3 font-weight-normal">
+                    class="border-0 px-0 font-weight-normal">
                   Email
                 </th>
-                <td class="text-right border-0 px-0 pt-3">
+                <td class="text-right border-0 px-0">
                   {{ user.email }}
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="border-0 px-0 pt-3">收貨人姓名</th>
-                <td class="text-right border-0 px-0 pt-3">{{ user.name }}</td>
+                <th scope="row" class="border-0 px-0">收貨人姓名</th>
+                <td class="text-right border-0 px-0">{{ user.name }}</td>
               </tr>
               <tr>
-                <th scope="row" class="border-0 px-0 pt-3">收貨人電話</th>
-                <td class="text-right border-0 px-0 pt-3">{{ user.tel }}</td>
+                <th scope="row" class="border-0 px-0">收貨人電話</th>
+                <td class="text-right border-0 px-0">{{ user.tel }}</td>
               </tr>
               <tr>
-                <th scope="row" class="border-0 px-0 pt-3">收貨人地址</th>
-                <td class="text-right border-0 px-0 pt-3">{{ user.address }}</td>
+                <th scope="row" class="border-0 px-0">收貨人地址</th>
+                <td class="text-right border-0 px-0">{{ user.address }}</td>
               </tr>
             </tbody>
           </table>
           <table class="table text-muted">
             <tbody>
               <tr>
-                <th scope="row" class="border-0 px-0 pt-3">付款金額</th>
-                <td class="text-right border-0 px-0 pt-3">{{ totalPrice }}</td>
+                <th scope="row" class="border-0 px-0">付款金額</th>
+                <td class="text-right border-0 px-0">{{ totalPrice }}</td>
               </tr>
               <tr>
-                <th scope="row" class="border-0 px-0 pt-3">付款方式</th>
-                <td class="text-right border-0 px-0 pt-3">{{ payment }}</td>
+                <th scope="row" class="border-0 px-0">付款方式</th>
+                <td class="text-right border-0 px-0">{{ payment }}</td>
               </tr>
               <tr>
-                <th scope="row" class="border-0 px-0 pt-3">付款狀態</th>
-                <td class="text-right border-0 px-0 pt-3" :class="paid ? 'text-success' : ''">
+                <th scope="row" class="border-0 px-0">付款狀態</th>
+                <td class="text-right border-0 px-0" :class="paid ? 'text-success' : ''">
                   {{ paid ? '付款成功' : '尚未付款' }}
                 </td>
               </tr>

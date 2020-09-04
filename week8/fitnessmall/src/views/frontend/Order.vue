@@ -1,8 +1,8 @@
 <template>
   <div class="container" style="margin-top: 5rem;margin-bottom: 5rem;">
-    <div class="row justify-content-center">
-      <div class="col-md-6 bg-white p-3 mt-3">
-        <div class="mb-2">
+    <div class="row justify-content-center flex-lg-row flex-column-reverse">
+      <div class="col-lg-6 bg-white customer-info">
+        <div class="mb-3">
           <h4>客戶資訊</h4>
         </div>
         <div>
@@ -77,8 +77,8 @@
           </ValidationObserver>
         </div>
       </div>
-      <div class="col-md-4 mb-5 p-3 mt-3">
-        <div class="border p-5 mx-2 mb-4 order-card">
+      <div class="col-lg-4 p-3 mt-3">
+        <div class="border p-5 mx-2 order-card">
           <h4 class="mb-4 text-brown font-weight-bold">訂單明細</h4>
           <div v-for="item in carts"
                 :key="item.product.id + 1">
@@ -188,3 +188,22 @@ export default {
   },
 };
 </script>
+
+<style>
+.customer-info {
+  margin-top: 30px;
+}
+
+@media screen and (min-width: 769px) {
+  .order-card {
+    position: sticky;
+    top: 115px;
+  }
+}
+@media screen and (max-width: 769px) {
+  .order-card {
+    margin: 0;
+    padding: 0;
+  }
+}
+</style>

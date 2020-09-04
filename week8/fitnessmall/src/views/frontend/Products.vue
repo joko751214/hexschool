@@ -21,34 +21,35 @@
       </div>
       <div class="col-lg-10 col-md-9">
         <div class="row">
-          <div class="col-lg-4 col-sm-6 mb-3" v-for="item in filterCategories" :key="item.id">
-            <div class="card border-0 mb-4 position-relative position-relative">
+          <div class="col-lg-4 col-sm-6 mb-5" v-for="item in filterCategories" :key="item.id">
+            <div class="top">
               <router-link :to="`/product/${ item.id }`">
-                <div style="
-                    height: 200px;
-                    background-size: cover;
-                    background-position: center;
-                  "
-                    class="rounded-0"
-                    :style="{ backgroundImage: `url(${ item.imageUrl[0] })` }">
-                  </div>
+                <div class="picture"
+                :style="{ backgroundImage: `url(${ item.imageUrl[0] })` }"></div>
               </router-link>
-              <div class="card-body p-0">
-                <router-link :to="`/product/${ item.id }`">
-                  <h4 class="mt-3 mb-2">
-                    {{item.title}}
-                  </h4>
-                </router-link>
-                <p class="card-text mb-0 price">{{ item.price | currency }}
-                  <span class="text-muted"><del>{{ item.origin_price | currency }}</del></span>
-                </p>
-                <p class="text-muted" style="font-size: 8px;">{{ item.content }}</p>
-                <button class="btn btn-primary mt-2 btn-block text-white"
-                @click="addToCart(item)">
-                  <b-spinner small type='grow' v-if='statusId === item.id'></b-spinner>
-                  加入購物車
-                </button>
+              <div class="tag bg-primary">
+                <span @click='addToTrack(item.id)'>
+                  <i class="fas fa-heart"
+                  v-if='followed.indexOf(item.id) === -1'></i>
+                  <i class="fas fa-heart heart" v-else></i>
+                </span>
               </div>
+            </div>
+            <div class="bottom">
+              <router-link :to="`/product/${ item.id }`">
+                <h4 class="mt-3 mb-2">
+                  {{item.title}}
+                </h4>
+              </router-link>
+              <p class="card-text mb-0 price">{{ item.price | currency }}
+                <span class="text-muted"><del>{{ item.origin_price | currency }}</del></span>
+              </p>
+              <p class="text-muted" style="font-size: 8px;">{{ item.content }}</p>
+              <button class="btn btn-primary mt-2 btn-block text-white"
+              @click="addToCart(item)">
+                <b-spinner small type='grow' v-if='statusId === item.id'></b-spinner>
+                加入購物車
+              </button>
             </div>
           </div>
         </div>
@@ -69,6 +70,7 @@ export default {
   },
   data() {
     return {
+      followed: JSON.parse(localStorage.getItem('followList')) || [],
       products: [],
       statusId: '',
       categories: ['沙拉', '早餐套餐', '水果拼盤'],
@@ -83,7 +85,6 @@ export default {
         .then((res) => {
           this.products = res.data.data;
           const { categoryName } = this.$route.params;
-          console.log(this.$route);
           if (categoryName) {
             this.filterCategory = categoryName;
           }
@@ -124,6 +125,25 @@ export default {
           );
         });
     },
+    addToTrack(id) {
+      const followId = this.followed.indexOf(id);
+      if (followId === -1) {
+        this.followed.push(id);
+        this.$swal(
+          '已加入追蹤',
+          '',
+          'success',
+        );
+      } else {
+        this.followed.splice(followId, 1);
+        this.$swal(
+          '已取消追蹤',
+          '',
+          'success',
+        );
+      }
+      localStorage.setItem('followList', JSON.stringify(this.followed));
+    },
   },
   computed: {
     filterCategories() {
@@ -154,5 +174,40 @@ export default {
 }
 .price {
   color: red;
+}
+.top {
+  height: 200px;
+  overflow: hidden;
+}
+.tag {
+  width: 100%;
+  text-align: center;
+  transform: translate(115px,-185px) rotate(45deg);
+  color: white;
+  font-weight: 700;
+  padding: 5px 0px;
+  box-shadow: 0px 0px 12px rgba(0,0,0,0.2);
+}
+.picture {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+.tag i {
+  cursor: pointer;
+}
+.tag i:hover {
+  color: red;
+}
+
+.heart {
+  color: red;
+}
+.swal-modal{
+  width: 300px;
+  position: absolute;
+  top: 0;
+  right: 35px;
 }
 </style>

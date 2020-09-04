@@ -1,17 +1,11 @@
 <template>
-  <div class="row">
+  <div class="row" v-if='relatedProducts.length'>
     <div class="col-md-4" v-for="item in relatedProducts" :key="item.id">
       <div class="card border-0 mb-4 position-relative position-relative">
-        <router-link :to="`/product/${ item.id }`">
-          <div style="
-              height: 200px;
-              background-size: cover;
-              background-position: center;
-            "
-              class="rounded-0"
-              :style="{ backgroundImage: `url(${ item.imageUrl[0] })` }">
-            </div>
-        </router-link>
+        <div class='relatedPicture'
+          :style="{ backgroundImage: `url(${ item.imageUrl[0] })` }"
+          @click.prevent='move(item.id)'>
+        </div>
         <div class="card-body p-0">
           <h4 class="mt-3 mb-2">{{item.title}}</h4>
           <p class="card-text mb-0 price">{{ item.price | currency }}
@@ -45,7 +39,6 @@ export default {
       this.$http.get(url, { params: { page } })
         .then((res) => {
           this.products = res.data.data;
-
           loader.hide();
         }).catch((err) => {
           this.$swal(
@@ -83,6 +76,10 @@ export default {
           );
         });
     },
+    move(id) {
+      this.$router.push(`/product/${id}`);
+      this.$emit('update');
+    },
   },
   computed: {
     relatedProducts() {
@@ -99,5 +96,10 @@ export default {
 </script>
 
 <style>
-
+.relatedPicture {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
 </style>

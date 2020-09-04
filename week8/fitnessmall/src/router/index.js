@@ -15,6 +15,10 @@ const routes = [
     component: Home,
     children: [
       {
+        path: 'favorite',
+        component: () => import('../views/frontend/Favorite.vue'),
+      },
+      {
         name: 'products',
         path: 'products',
         component: () => import('../views/frontend/Products.vue'),
