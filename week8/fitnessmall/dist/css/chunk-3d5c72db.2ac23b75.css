@@ -1,0 +1,1 @@
+.description,.title{opacity:0;transition:1s;position:relative}.description{text-align:center;top:80%}a:hover .description{text-align:center;top:40%;transform:translateY(-40%)}a:hover .description,a:hover .title{opacity:1;color:#fff;position:relative}.cartImage{width:130px;background-size:cover;background-position:50%}
